@@ -26,11 +26,17 @@
         name = @"u8";
     }
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"gif"];
+    NSString *path = nil;
+    path = [[NSBundle mainBundle] pathForResource:name ofType:@"gif"];
+    
     if (!path) {
-        NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"Resource" ofType:@"bundle"]];
-        path = [bundle pathForResource:name ofType:@"gif"];
+        NSBundle    *bundle = [NSBundle bundleForClass:[self class]];
+        NSURL       *url = [bundle URLForResource:@"XQProgressHUD" withExtension:@"bundle"];
+        NSBundle    *gifBundle = [NSBundle bundleWithURL:url];
+        path = [gifBundle pathForResource:name ofType:@"gif"];
     }
+    
+    NSAssert(path != nil, @"Path must not be nil");
     
     NSData *data = [NSData dataWithContentsOfFile:path];
     path = nil;

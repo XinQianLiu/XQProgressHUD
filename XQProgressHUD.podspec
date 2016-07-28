@@ -32,9 +32,10 @@ Rotating animation for network requests.
 
   s.source_files = 'XQProgressHUD/Classes/**/*'
   
-  s.resource_bundles = {
-     'XQProgressHUD' => ['XQProgressHUD/Assets/.gif']
-  }
+  s.resource_bundle = {
+  	'XQProgressHUD' =>  'XQProgressHUD/Assets/*.gif'
+   }
+  #s.resource = 'XQProgressHUD/Assets/**/*'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'ImageIO','Foundation'
