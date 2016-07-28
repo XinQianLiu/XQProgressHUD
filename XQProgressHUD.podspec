@@ -30,10 +30,10 @@ Rotating animation for network requests.
 
   s.ios.deployment_target = '7.0'
 
-  s.source_files = 'XQProgressHUD/Classes/**/*.{h.m}'
+  s.source_files = 'XQProgressHUD/Classes/**/*'
   
   s.resource_bundles = {
-     'XQProgressHUD' => ['XQProgressHUD/Assets/*.gif']
+     'XQProgressHUD' => ['XQProgressHUD/Assets/.gif']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
