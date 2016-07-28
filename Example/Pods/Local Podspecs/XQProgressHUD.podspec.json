@@ -1,0 +1,22 @@
+{
+  "name": "XQProgressHUD",
+  "version": "0.1.0",
+  "summary": "A short description of XQProgressHUD.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/XQProgressHUD",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "LiuXinQian": "1613565807@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/XQProgressHUD.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "XQProgressHUD/Classes/**/*"
+}

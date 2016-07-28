@@ -1,0 +1,16 @@
+PODS:
+  - XQProgressHUD (0.1.0)
+
+DEPENDENCIES:
+  - XQProgressHUD (from `../`)
+
+EXTERNAL SOURCES:
+  XQProgressHUD:
+    :path: ../
+
+SPEC CHECKSUMS:
+  XQProgressHUD: 667df6d44efe55b31340d69f3d4c203ce5555ab6
+
+PODFILE CHECKSUM: 74db82a805d32d9925e2e2f6b47b0da6b340cd0d
+
+COCOAPODS: 1.0.1
