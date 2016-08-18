@@ -1,9 +1,11 @@
 # XQProgressHUD
-![](http://a1.qpic.cn/psb?/V12vcXx72Pkh20/DgvzBHiLBFKkFkLSpKoHobAAlcWqvKiFv72uhiK5o1g!/m/dHABAAAAAAAAnull&bo=dwGxAgAAAAADB.c!&rf=photolist&t=5)
+
 [![CI Status](http://img.shields.io/travis/LiuXinQian/XQProgressHUD.svg?style=flat)](https://travis-ci.org/LiuXinQian/XQProgressHUD)
 [![Version](https://img.shields.io/cocoapods/v/XQProgressHUD.svg?style=flat)](http://cocoapods.org/pods/XQProgressHUD)
 [![License](https://img.shields.io/cocoapods/l/XQProgressHUD.svg?style=flat)](http://cocoapods.org/pods/XQProgressHUD)
 [![Platform](https://img.shields.io/cocoapods/p/XQProgressHUD.svg?style=flat)](http://cocoapods.org/pods/XQProgressHUD)
+
+![](http://a1.qpic.cn/psb?/V12vcXx72Pkh20/DgvzBHiLBFKkFkLSpKoHobAAlcWqvKiFv72uhiK5o1g!/m/dHABAAAAAAAAnull&bo=dwGxAgAAAAADB.c!&rf=photolist&t=5)
 
 ## Example
 
