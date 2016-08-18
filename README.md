@@ -25,7 +25,7 @@ At first, import XQProgressHUD:
 ```
 #import "XQProgressHUD.h"
 ```
-code:
+The sample code, details the Demo:
 ```objective-c
 XQProgressHUD *hud = [XQProgressHUD HUD];
 [hud show];
