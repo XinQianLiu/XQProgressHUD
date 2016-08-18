@@ -527,7 +527,10 @@
                     if (width <= foregroundWidth) {
                         width = foregroundWidth;
                     }
-                    else {
+                    else if (foregroundWidth > 120.0f){
+                        width = foregroundWidth;
+                    }
+                    else{
                         width = 140.0f;
                     }
                     
