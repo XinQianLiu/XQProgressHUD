@@ -96,10 +96,10 @@
 #pragma mark - XQAnimatedView
 @interface XQAnimatedView ()
 
-@property (nonatomic, strong) UIView *indicatorView;
-@property (nonatomic, strong) CAShapeLayer *outerLayer;
-@property (nonatomic, strong) CAShapeLayer *innerLayer;
-@property (nonatomic, strong) CAShapeLayer *animatedLayer;
+@property (nonatomic, strong) UIView        *indicatorView;
+@property (nonatomic, strong) CAShapeLayer  *outerLayer;
+@property (nonatomic, strong) CAShapeLayer  *innerLayer;
+@property (nonatomic, strong) CAShapeLayer  *animatedLayer;
 
 @end
 
