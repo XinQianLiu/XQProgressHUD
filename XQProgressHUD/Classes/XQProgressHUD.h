@@ -71,7 +71,7 @@ typedef void(^XQProgressHUDHandler)();
 
 @property (nonatomic) UIColor                   *trackTintColor;        // Default whiteColor
 @property (nonatomic) UIColor                   *progressTintColor;     // Default xq_animatedViewDefaultColor
-@property (nonatomic, assign) CGFloat           animatedDuration;       // Default 2.0f
+@property (nonatomic, assign) CGFloat           animatedDuration;       // Default 1.5f
 @property (nonatomic, assign) CGFloat           ringRadius;             // Default 20.0f
 @property (nonatomic, assign) CGFloat           progress;               // Progress (0.0 to 1.0)
 
