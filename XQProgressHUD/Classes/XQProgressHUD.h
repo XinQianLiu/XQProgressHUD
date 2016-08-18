@@ -65,6 +65,7 @@ typedef void(^XQProgressHUDHandler)();
 @property (nonatomic) UIColor                   *textColor;             // Default xq_animatedViewDefaultColor
 @property (nonatomic, copy) NSString            *gifImageName;          // Default is "u8.gif"
 @property (nonatomic, assign) BOOL              suffixPointEnabled;     // Whether to show "..." or not. Default YES.
+@property (nonatomic, assign) CGFloat           suffixPointAnimatedDuration; // Default 0.2f;
 @property (nonatomic, assign) CGFloat           yOffset;                // Set offset.y instead.
 @property (nonatomic, assign) CGSize            size;                   // Default is CGSizeMake(120.0f, 90.0f)
 

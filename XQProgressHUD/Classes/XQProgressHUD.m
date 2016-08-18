@@ -320,6 +320,7 @@
         _progressTintColor = [UIColor xq_animatedViewDefaultColor];
         _trackTintColor = [UIColor whiteColor];
         _animatedDuration = 1.5f;
+        _suffixPointAnimatedDuration = 0.2f;
         _mode = XQProgressHUDModeIndicator;
         _textColor = [UIColor xq_animatedViewDefaultColor];
         _size = CGSizeMake(120.0f, 90.0f);
@@ -657,7 +658,7 @@
 - (void)addPointLabelTimer
 {
     [self removeWeekTimer];
-    _weekTimer = [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(weekTime:) userInfo:nil repeats:YES];
+    _weekTimer = [NSTimer scheduledTimerWithTimeInterval:self.suffixPointAnimatedDuration target:self selector:@selector(weekTime:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_weekTimer forMode:NSDefaultRunLoopMode];
 }
 
@@ -706,11 +707,17 @@
         _overlayWindow.hidden = YES;
         _overlayWindow = nil;
         _rootViewController = nil;
-        _mode = XQProgressHUDModeIndicator;
-        _size = CGSizeMake(120.0f, 90.0f);
+        self.userInteractionEnabled = YES;
         _isYOffset = NO;
         _suffixPointEnabled = YES;
-        self.userInteractionEnabled = YES;
+        _progressTintColor = [UIColor xq_animatedViewDefaultColor];
+        _trackTintColor = [UIColor whiteColor];
+        _animatedDuration = 1.5f;
+        _suffixPointAnimatedDuration = 0.2f;
+        _mode = XQProgressHUDModeIndicator;
+        _textColor = [UIColor xq_animatedViewDefaultColor];
+        _size = CGSizeMake(120.0f, 90.0f);
+        _ringRadius = 20.0f;
         
         // Completion handler
         if (self.didDismissHandler) {

@@ -196,9 +196,10 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.yOffset = 240.0f;
     hud.textColor = [UIColor redColor];
     hud.text = @"Custome";
+    hud.suffixPointAnimatedDuration = 0.5f;
     hud.userInteractionEnabled = NO;
     [hud show];
-    [hud dismissAfterDelay:2.0f];
+    [hud dismissAfterDelay:5.0f];
     [hud didDissmissHandler:^{
         NSLog(@"HUD Completion");
     }];
