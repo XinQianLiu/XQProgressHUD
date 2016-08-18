@@ -52,35 +52,27 @@ typedef void(^XQProgressHUDHandler)();
 - (void)dismissAfterDelay:(NSTimeInterval)delay;
 - (void)didDissmissHandler:(XQProgressHUDHandler)handler;
 
-@property (nonatomic) UIView                        *customIndicator;
+@property (nonatomic, assign) XQProgressHUDMode mode;                   // Default is XQProgressHUDModeIndicator.
+@property (nonatomic) UIView                    *customIndicator;
 
-@property (nonatomic, assign) XQProgressHUDMode     mode;               // Default is XQProgressHUDModeIndicator.
+@property (nonatomic) UIColor                   *foregroundColor;       // Default xq_hudForegroundColor
+@property (nonatomic) UIColor                   *foregroundBorderColor; // Default clearColor
+@property (nonatomic, assign) CGFloat           foregroundBorderWidth;  // Default 0.0f
+@property (nonatomic, assign) CGFloat           foregroundCornerRaidus; // Default 5.0f;
 
-@property (nonatomic, assign) BOOL                  suffixPointEnabled; // Whether to show "..." or not. Default YES.
+@property (nonatomic, copy) NSString            *text;                  // Default "Loading"
+@property (nonatomic) UIFont                    *textFont;              // Default is 15.0f
+@property (nonatomic) UIColor                   *textColor;             // Default xq_animatedViewDefaultColor
+@property (nonatomic, copy) NSString            *gifImageName;          // Default is "u8.gif"
+@property (nonatomic, assign) BOOL              suffixPointEnabled;     // Whether to show "..." or not. Default YES.
+@property (nonatomic, assign) CGFloat           yOffset;                // Set offset.y instead.
+@property (nonatomic, assign) CGSize            size;                   // Default is CGSizeMake(120.0f, 90.0f)
 
-@property (nonatomic, assign) CGSize                size;               // Default is CGSizeMake(120.0f, 90.0f)
-
-@property (nonatomic) UIColor                       *trackTintColor;    // default whiteColor
-@property (nonatomic) UIColor                       *progressTintColor; // default xq_animatedViewDefaultColor
-
-@property (nonatomic) UIColor                       *textColor;
-
-@property (nonatomic) UIColor                       *foregroundColor;
-@property (nonatomic) UIColor                       *foregroundBorderColor;
-
-@property (nonatomic, copy) NSString                *text;                  // Default "Loading"
-@property (nonatomic) UIFont                        *textFont;              // Default is 15.0f
-
-@property (nonatomic, copy) NSString                *gifImageName;          // Default is "u8.gif"
-
-@property (nonatomic, assign) CGFloat               animatedDuration;       // Default 2.0f
-@property (nonatomic, assign) CGFloat               ringRadius;             // Default 20.0f
-@property (nonatomic, assign) CGFloat               progress;
-
-@property (nonatomic, assign) CGFloat               foregroundBorderWidth;  // Default 0.0f
-@property (nonatomic, assign) CGFloat               foregroundCornerRaidus; // Default 5.0f;
-
-@property (nonatomic, assign) CGFloat               yOffset;
+@property (nonatomic) UIColor                   *trackTintColor;        // Default whiteColor
+@property (nonatomic) UIColor                   *progressTintColor;     // Default xq_animatedViewDefaultColor
+@property (nonatomic, assign) CGFloat           animatedDuration;       // Default 2.0f
+@property (nonatomic, assign) CGFloat           ringRadius;             // Default 20.0f
+@property (nonatomic, assign) CGFloat           progress;               // Progress (0.0 to 1.0)
 
 @end
 
