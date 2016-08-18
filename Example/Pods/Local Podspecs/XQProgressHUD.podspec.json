@@ -17,7 +17,7 @@
   },
   "source_files": "XQProgressHUD/Classes/**/*",
   "resource_bundles": {
-    "XQProgressHUD": "XQProgressHUD/Assets/*.gif"
+    "XQProgressHUD": "XQProgressHUD/Assets/*"
   },
   "frameworks": [
     "UIKit",

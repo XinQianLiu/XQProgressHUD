@@ -7,11 +7,34 @@
 //
 
 #import "XQViewController.h"
-#import "XQTestViewController.h"
 #import <XQProgressHUD/XQProgressHUD.h>
 
-@interface XQViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong) XQProgressHUD  *hud;
+static NSString *const sHUDKey = @"sHUDKey";
+static NSString *const sDelayTimeKey = @"sDelayTimeKey";
+
+@interface XQExample : NSObject
+
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, assign) SEL selector;
+
+@end
+
+@implementation XQExample
+
++ (instancetype)exampleWithTitle:(NSString *)title selector:(SEL)selector
+{
+    XQExample *example = [[self class] new];
+    example.title = title;
+    example.selector = selector;
+    return example;
+}
+
+@end
+
+@interface XQViewController () <UITableViewDataSource, UITableViewDelegate, NSURLSessionDelegate>
+
+@property (nonatomic, strong) NSArray <XQExample *> *examples;
+
 @end
 
 @implementation XQViewController
@@ -19,7 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
     self.view.backgroundColor = [UIColor whiteColor];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero];
@@ -32,14 +55,171 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+    
+    self.examples = @[
+                      [XQExample exampleWithTitle:@"Indicator mode" selector:@selector(IndicatorModeExample)],
+                      [XQExample exampleWithTitle:@"rotating mode" selector:@selector(rotatingModeExample)],
+                      [XQExample exampleWithTitle:@"Cyclic rotation mode" selector:@selector(cyclicRotationModeExample)],
+                      [XQExample exampleWithTitle:@"Progress mode" selector:@selector(progressModeExample)],
+                      [XQExample exampleWithTitle:@"Success mode" selector:@selector(successModeExample)],
+                      [XQExample exampleWithTitle:@"Error mode" selector:@selector(errorModeExample)],
+                      [XQExample exampleWithTitle:@"With details label" selector:@selector(detailsLabelExample)],
+                      [XQExample exampleWithTitle:@"Custom Indicator mode" selector:@selector(customIndicatorModeExample)],
+                      [XQExample exampleWithTitle:@"GIF mode" selector:@selector(gifModeExample)],
+                      [XQExample exampleWithTitle:@"Text only" selector:@selector(textOnlyExample)]
+                      ];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+#pragma mark - Selectors
+
+- (void)IndicatorModeExample
 {
-    if (_hud) {
-        [_hud dismiss];
-        _hud = nil;
-    }
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    [hud show];
+    [hud dismissAfterDelay:3.0f];
+}
+
+- (void)rotatingModeExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeRotating;
+    [hud show];
+    [hud dismissAfterDelay:3.0f];
+}
+
+- (void)cyclicRotationModeExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeCyclicRotation;
+    hud.ringRadius = 40.0f;
+    hud.size = CGSizeMake(150, 150);
+    hud.textFont = [UIFont systemFontOfSize:25.0f];
+    hud.text = @"正在加载";
+    [hud show];
+    [hud dismissAfterDelay:3.0f];
+}
+
+- (void)progressModeExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeIndicator;
+    hud.text = @"Preparing...";
+    hud.suffixPointEnabled = NO;
+    hud.progressTintColor = [UIColor redColor];
+    hud.textColor = [UIColor redColor];
+    [hud show];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        hud.mode = XQProgressHUDModeProgress;
+        hud.suffixPointEnabled = YES;
+        hud.text = @"Loading";
+        [hud show];
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            float progress = 0.0f;
+            
+            while (progress < 1.0f) {
+                progress += 0.01f;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    hud.progress = progress;
+                });
+                usleep(50000);
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                hud.mode = XQProgressHUDModeIndicator;
+                hud.suffixPointEnabled = NO;
+                hud.text = @"Cleaning up...";
+                [hud show];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    hud.mode = XQProgressHUDModeSuccess;
+                    hud.text = @"加载完成!~~";
+                    hud.textFont = [UIFont systemFontOfSize:20.0f];
+                    [hud show];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        hud.mode = XQProgressHUDModeTextOnly;
+                        hud.text = @"组合提示完成";
+                        hud.textColor = [UIColor whiteColor];
+                        [hud show];
+                        [hud dismissAfterDelay:2.0f];
+                    });
+                });
+            });
+        });
+    });
+}
+
+- (void)successModeExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeSuccess;
+    hud.text = @"Load the success!";
+    [hud show];
+    [hud dismissAfterDelay:2.0f];
+}
+
+- (void)errorModeExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeError;
+    hud.text = @"Load failed!~~";
+    hud.textFont = [UIFont systemFontOfSize:18.0f];
+    [hud show];
+    [hud dismissAfterDelay:2.0f];
+}
+
+- (void)detailsLabelExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeIndicator;
+    hud.progressTintColor = [UIColor redColor];
+    hud.textColor = [UIColor redColor];
+    hud.suffixPointEnabled = NO;
+    hud.text = @"俺师傅看你的沙发那你阿富汗都是撒娇办法吗坚持不懈看着酒吧上课就打算斗爱吃那就不是怒问老师基本法办法";
+    [hud show];
+    [hud dismissAfterDelay:2.0f];
+}
+
+- (void)customIndicatorModeExample
+{
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor redColor];
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeCustomIndicator;
+    hud.customIndicator = view;
+    hud.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5f];
+    hud.foregroundColor = [UIColor whiteColor];
+    hud.foregroundBorderColor = [UIColor redColor];
+    hud.foregroundBorderWidth = 2.0f;
+    hud.foregroundCornerRaidus = 10.0f;
+    hud.size = CGSizeMake(150.0f, 150.0f);
+    hud.ringRadius = 40.0f;
+    hud.textFont = [UIFont systemFontOfSize:22.0f];
+    hud.yOffset = 20.0f;
+    hud.textColor = [UIColor redColor];
+    hud.userInteractionEnabled = NO;
+    [hud show];
+    [hud dismissAfterDelay:2.0f];
+    [hud didDissmissHandler:^{
+        NSLog(@"HUD Completion");
+    }];
+}
+
+- (void)gifModeExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeGIF;
+    hud.gifImageName = @"u8";
+    hud.size = CGSizeMake(150.0f, 150.0f);
+    [hud show];
+    [hud dismissAfterDelay:5.0f];
+}
+
+- (void)textOnlyExample
+{
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    hud.mode = XQProgressHUDModeTextOnly;
+    hud.text = @"Text only";
+    [hud show];
+    [hud dismissAfterDelay:2.0f];
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDatasource
@@ -51,120 +231,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 7;
+    return self.examples.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CELLID" forIndexPath:indexPath];
     
-    switch (indexPath.row) {
-        case 0:
-            cell.textLabel.text = @"Display The Animation View";
-            break;
-        case 1:
-            cell.textLabel.text = @"Animation View For Load The Timeout";
-            break;
-        case 2:
-            cell.textLabel.text = @"The Custom Style Animation View";
-            break;
-        case 3:
-            cell.textLabel.text = @"Display GIF Figure";
-            break;
-        case 4:
-            cell.textLabel.text = @"GIF Figure For Load The Timeout";
-            break;
-        case 5:
-            cell.textLabel.text = @"User Interaction Enabled";
-            break;
-        case 6:
-            cell.textLabel.text = @"To Test ViewController";
-        default:
-            break;
-    }
+    XQExample *example = self.examples[indexPath.row];
+    cell.textLabel.text = example.title;
+    cell.textLabel.textColor = self.view.tintColor;
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    cell.selectedBackgroundView = [UIView new];
+    cell.selectedBackgroundView.backgroundColor = [cell.textLabel.textColor colorWithAlphaComponent:0.1f];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.row) {
-        case 0:
-        {
-            [self.hud show];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.hud dismiss];
-            });
-            break;
-        }
-        case 1:
-        {
-            [self.hud showAnimationViewOfTimeout:5.0f userInteraction:YES timeoutBlock:^(XQProgressHUD *hud) {
-                [self.hud dismiss];
-                //                self.hud = nil
-            }];
-            break;
-        }
-        case 2:
-        {
-            self.hud.animatedViewModel.isPointLabel = NO;
-            self.hud.animatedViewModel.outerLayerStrokeColor = [UIColor whiteColor];
-            self.hud.animatedViewModel.innerLayerStrokeColor = [UIColor redColor];
-            self.hud.animatedViewModel.titleText = @"正在玩命加载中";
-            self.hud.animatedViewModel.titleTextColor = [UIColor blackColor];
-            self.hud.animatedViewModel.selfBackgroundColor = [UIColor cyanColor];
-            self.hud.animatedViewModel.selfLayerBorderColor = [UIColor redColor];
-            [self.hud showAnimationViewOfTimeout:5.0f userInteraction:YES timeoutBlock:^(XQProgressHUD *hud) {
-                [self.hud dismiss];
-                //                self.hud = nil;
-            }];
-            break;
-        }
-        case 3:
-        {
-            //            [self.hud showGifImageViewOfGifNamed:nil userInteraction:YES];
-            [self.hud showGif];
-            break;
-        }
-        case 4:
-        {
-            [self.hud showGifImageViewOfGifNamed:nil Timeout:5.0f userInteraction:YES timeoutBlock:^(XQProgressHUD *hud) {
-                [self.hud dismiss];
-                //                self.hud = nil;
-            }];
-            break;
-        }
-        case 5:
-        {
-            [self.hud showAnimationViewOfUserInteraction:NO];
-            break;
-        }
-        case 6:
-        {
-            XQTestViewController *vc = [[XQTestViewController alloc] init];
-            [self presentViewController:vc animated:YES completion:nil];
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-#pragma mark - Getters
-- (XQProgressHUD *)hud
-{
-    if (!_hud) {
-        _hud = [[XQProgressHUD alloc] init];
-    }
-    
-    return _hud;
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    XQExample *example = self.examples[indexPath.row];
+    [self performSelector:example.selector];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    });
 }
 
 @end

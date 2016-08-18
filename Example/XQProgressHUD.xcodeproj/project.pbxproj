@@ -22,7 +22,6 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		B6A6A0A41D49F9E0002DAE1D /* XQTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A6A0A31D49F9E0002DAE1D /* XQTestViewController.m */; };
 		B6BF5AED1D49CB9A00301576 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6BF5AEC1D49CB9A00301576 /* ImageIO.framework */; };
 		C3AF01B65086867694B777CE /* Pods_XQProgressHUD_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEC0D2C75C714F71F001CED /* Pods_XQProgressHUD_Example.framework */; };
 /* End PBXBuildFile section */
@@ -66,8 +65,6 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		ABEC0D2C75C714F71F001CED /* Pods_XQProgressHUD_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XQProgressHUD_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B672FEA4A83B915232EE3944 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		B6A6A0A21D49F9E0002DAE1D /* XQTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQTestViewController.h; sourceTree = "<group>"; };
-		B6A6A0A31D49F9E0002DAE1D /* XQTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQTestViewController.m; sourceTree = "<group>"; };
 		B6BF5AEC1D49CB9A00301576 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F3E25895F8FBDE3A18D2B68D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,8 +139,6 @@
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* XQViewController.h */,
 				6003F5A6195388D20070C39A /* XQViewController.m */,
-				B6A6A0A21D49F9E0002DAE1D /* XQTestViewController.h */,
-				B6A6A0A31D49F9E0002DAE1D /* XQTestViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -400,7 +395,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* XQAppDelegate.m in Sources */,
-				B6A6A0A41D49F9E0002DAE1D /* XQTestViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* XQViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);

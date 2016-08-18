@@ -8,97 +8,128 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "UIWindow+SIUtils.h"
-#import "XQAnimatedView.h"
-#import "XQBeingLoadedGifImageView.h"
+#import <ImageIO/ImageIO.h>
 
 @class XQProgressHUD;
 
 /**
- *  View Loading Timeout Feedback
- *
- *  @param hud XQBeingLoadedHUD
+ *  The style of display view
  */
-typedef void(^TimeoutBlock)(XQProgressHUD *hud);
+typedef NS_ENUM(NSInteger , XQProgressHUDMode) {
+    // There is no view
+    XQProgressHUDModeNone,
+    // UIActivityIndicatorView
+    XQProgressHUDModeIndicator,
+    // Rotating style
+    XQProgressHUDModeRotating,
+    // Cyclic rotation style
+    XQProgressHUDModeCyclicRotation,
+    // Shows a custom indicator
+    XQProgressHUDModeCustomIndicator,
+    // Shows a success image view
+    XQProgressHUDModeSuccess,
+    // Shows a error image view
+    XQProgressHUDModeError,
+    // Shows a progress view
+    XQProgressHUDModeProgress,
+    // Shows a GIF image view
+    XQProgressHUDModeGIF,
+    // Shows only labels
+    XQProgressHUDModeTextOnly
+};
 
+typedef void(^XQProgressHUDHandler)();
 
-
-/**
- *  弹出视图，调用 "dismiss" 方法后，切记释放对象 XQBeingLoadedHUD = nil
- *  @param 例如：  XQBeingLoadedHUD *_hud = [[XQBeingLoadedHUD alloc] init]; [_hud showWithGIFNamed:nil Timeout:5.0f timeoutBlock:^{ NSLog(@"超时了"); _hud = nil; }];
- *  @param  所以子视图布局不可更改
-- returns:
- */
+#pragma mark -
+#pragma mark - XQProgressHUD
 @interface XQProgressHUD : UIView
 
-#pragma mark - Public Methods
-/**
- *  Remove the view
- */
-- (void)dismiss;
++ (instancetype)HUD;
 
-
-
-#pragma mark - Public Attribute
-@property (nonatomic, readonly, strong) UIWindow      *overlayWindow;
-@property (nonatomic, readonly, strong) UIWindow      *hudWindow;
-@property (nonatomic, readonly, copy) TimeoutBlock    timeoutBlock;// View Loading Timeout Feedback
-
-
-
-#pragma mark - XQAnimatedView
-@property (nonatomic, strong) XQAnimatedViewModel *animatedViewModel;  // Set the animatedView style
-
-/**
- *  Display Default Animation View
- */
 - (void)show;
 
-/**
- *  Display The Animation View
- *
- *  @param userInteraction Whether To Enable User Interaction ，NO To Enable ，YES For The Disabled
- */
-- (void)showAnimationViewOfUserInteraction:(BOOL)userInteraction;
+- (void)dismiss;
+- (void)dismissAfterDelay:(NSTimeInterval)delay;
+- (void)didDissmissHandler:(XQProgressHUDHandler)handler;
 
-/**
- *  Animation View For Load The Timeout
- *
- *  @param time            Set The Timeout , Time >= 0.1f
- *  @param userInteraction Whether To Enable User Interaction ，NO To Enable ，YES For The Disabled
- *  @param timeoutBlock    View Loading Timeout Feedback
- */
-- (void)showAnimationViewOfTimeout:(NSTimeInterval)time
-                   userInteraction:(BOOL)userInteraction
-                      timeoutBlock:(TimeoutBlock)timeoutBlock;
+@property (nonatomic) UIView                        *customIndicator;
+
+@property (nonatomic, assign) XQProgressHUDMode     mode;               // Default is XQProgressHUDModeIndicator.
+
+@property (nonatomic, assign) BOOL                  suffixPointEnabled; // Whether to show "..." or not. Default YES.
+
+@property (nonatomic, assign) CGSize                size;               // Default is CGSizeMake(120.0f, 90.0f)
+
+@property (nonatomic) UIColor                       *trackTintColor;    // default whiteColor
+@property (nonatomic) UIColor                       *progressTintColor; // default xq_animatedViewDefaultColor
+
+@property (nonatomic) UIColor                       *textColor;
+
+@property (nonatomic) UIColor                       *foregroundColor;
+@property (nonatomic) UIColor                       *foregroundBorderColor;
+
+@property (nonatomic, copy) NSString                *text;                  // Default "Loading"
+@property (nonatomic) UIFont                        *textFont;              // Default is 15.0f
+
+@property (nonatomic, copy) NSString                *gifImageName;          // Default is "u8.gif"
+
+@property (nonatomic, assign) CGFloat               animatedDuration;       // Default 2.0f
+@property (nonatomic, assign) CGFloat               ringRadius;             // Default 20.0f
+@property (nonatomic, assign) CGFloat               progress;
+
+@property (nonatomic, assign) CGFloat               foregroundBorderWidth;  // Default 0.0f
+@property (nonatomic, assign) CGFloat               foregroundCornerRaidus; // Default 5.0f;
+
+@property (nonatomic, assign) CGFloat               yOffset;
+
+@end
+
+
+#pragma mark -
+#pragma mark - XQAnimateds
+@interface XQProgressHUDAnimatedClass : NSObject;
+
++ (CAAnimationGroup *)cyclicRotationAnimatedWithDuration:(CFTimeInterval)duration;
+
++ (CABasicAnimation *)rotatingAnimatedWithDuration:(CFTimeInterval)duration;
+
+@end;
 
 
 
-#pragma mark - XQBeingLoadedGifImageView
-/**
- *  Display Default Gif
- */
-- (void)showGif;
+#pragma mark -
+#pragma mark - XQAnimatedView
+@interface XQAnimatedView : UIView
 
-/**
- *  Display GIF Figure
- *
- *  @param named           GIF Name , Default "u8.gif"
- *  @param userInteraction Whether To Enable User Interaction ，NO To Enable ，YES For The Disabled
- */
-- (void)showGifImageViewOfGifNamed:(NSString *)named userInteraction:(BOOL)userInteraction;
+- (void)loadAnimateds;
 
-/**
- *  GIF Figure For Load The Timeout
- *
- *  @param named           GIF Name , Default "u8.gif"
- *  @param time            Set The Timeout , Time >= 0.1f
- *  @param userInteraction Whether To Enable User Interaction ，NO To Enable ，YES For The Disabled
- *  @param timeoutBlock    View Loading Timeout Feedback
- */
-- (void)showGifImageViewOfGifNamed:(NSString *)named
-                           Timeout:(NSTimeInterval)time
-                   userInteraction:(BOOL)userInteraction
-                      timeoutBlock:(TimeoutBlock)timeoutBlock;
+@property (nonatomic, assign) XQProgressHUDMode mode;
+@property (nonatomic, strong) UIColor           *trackTintColor;    // default whiteColor
+@property (nonatomic, strong) UIColor           *progressTintColor; // default xq_animatedViewDefaultColor
+@property (nonatomic, assign) CGFloat           animatedDuration;   // default 2.0f
+@property (nonatomic, assign) CGFloat           radius;             // default 20.0f
+@property (nonatomic, assign) CGFloat           progress;
+
+@end
+
+#pragma mark -
+#pragma mark - UIImage Category
+@interface UIImage (XQProgressHUDImage)
+
+// loading Image
++ (UIImage *)loadImageWithNamed:(NSString *)named;
+// loading Gif
++ (UIImage *)loadingGifWithName:(NSString *)name;
+
+@end
+
+
+
+#pragma mark - 
+#pragma mark - UIColor Category
+@interface UIColor (XQProgressHUDColor)
+
++ (UIColor *)xq_animatedViewDefaultColor;
++ (UIColor *)xq_hudForegroundColor;
 
 @end

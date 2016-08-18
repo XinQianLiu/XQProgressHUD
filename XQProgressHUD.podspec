@@ -33,7 +33,7 @@ Rotating animation for network requests.
   s.source_files = 'XQProgressHUD/Classes/**/*'
   
   s.resource_bundle = {
-  	'XQProgressHUD' =>  'XQProgressHUD/Assets/*.gif'
+  	'XQProgressHUD' =>  'XQProgressHUD/Assets/*'
    }
   #s.resource = 'XQProgressHUD/Assets/**/*'
 

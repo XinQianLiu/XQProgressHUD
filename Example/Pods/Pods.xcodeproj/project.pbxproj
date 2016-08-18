@@ -7,31 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03181ED6E483306ECABA445F435189AD /* XQProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA49B42A22836779AA0BB6D13F5EC25 /* XQProgressHUD.m */; };
 		0615C3FC237FAABEDB04FD714C45402E /* Pods-XQProgressHUD_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 47BB5B152F82C94302C7726D339FA5CA /* Pods-XQProgressHUD_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		18A8559F1FCBF11F2E6273415F114429 /* u8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 70C275152D1EF571F81A74D0AC8E6B64 /* u8.gif */; };
-		2A19B9058DD22817EAD35D7F8A8316CC /* UIWindow+SIUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = C73F2C6921EE60C8A4AC66CBD3335EFF /* UIWindow+SIUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1BFF24D395C0D0331909CB05781C7DAA /* success@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E89233E4E07A56E4868BE504432D9F /* success@3x.png */; };
+		204E4E1C52AEEDED779C326505C12A99 /* angle-mask@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A73CC24B2710F56A0B0C74809DBA1C0 /* angle-mask@3x.png */; };
+		2958CA91E87F14D9DBCF19431DB251DF /* angle-mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 935874A98B2721FDA6692D4AA5F1A8B7 /* angle-mask@2x.png */; };
 		3645F45860D6A6F2E7EE53AC080AD18D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F69D7F5F757E32F667732B08CC3293 /* UIKit.framework */; };
 		397CE8F7C602AAE995AEA1F46D01E993 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B42DF2EC862EBCCC0BA11D4C0DE985 /* Foundation.framework */; };
 		43F8318D3973B43F392D6BAC5652BB47 /* XQProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9E684895D61CBEAD10DAE1EEC75A7E2 /* XQProgressHUD.bundle */; };
-		4E5F712D6CA397F5A1E9765363E0DEEC /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE07D75E750FDCFE898DE51467C5015 /* UIWindow+SIUtils.m */; };
-		4F6DECA244C0F6FCC1D5ED0B09A22CFE /* XQAnimateds.h in Headers */ = {isa = PBXBuildFile; fileRef = CF60C30D77CC82D33973120160F40298 /* XQAnimateds.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		683018E67988ACA6C56CDB0847ACD813 /* XQAnimateds.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AAD64B1152EB1F52F17BFB821AC212 /* XQAnimateds.m */; };
-		6A26E8254B2E660919DBD678646A021E /* XQProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E17340F984D574C934C76DBFC5E5EC /* XQProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6F6270F9C3DBCB02ADC3ECB9B3BAC2A3 /* XQBeingLoadedGifImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73FB1E4CEE3116141E62BE02444D4127 /* XQBeingLoadedGifImageView.m */; };
+		49775946BD59B7F1DBB4CC72FAE79693 /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C452752EF39E7E3129C78D518406FF8D /* error@2x.png */; };
+		671B512CB079CC3F2F652D720E99CFCA /* error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3372654CD8AC34096CFBD96966C2F9 /* error@3x.png */; };
 		71E987127B900333153CD4DC82A5A10C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B42DF2EC862EBCCC0BA11D4C0DE985 /* Foundation.framework */; };
-		75FEE2722AA3112ADC73FAF033A8FEA7 /* XQProgressHUD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 60770B4E8FCB29FB059586CDF48AEAEF /* XQProgressHUD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		71FEA5E93E240F248C3F6DC3BB7774D5 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E1B9D6B98D22AD8D4F38BBB62DCD02B /* success.png */; };
 		82ABE46A4A08FA030910257915B09C46 /* Pods-XQProgressHUD_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2280BD461E36984ECFEA463146569FF2 /* Pods-XQProgressHUD_Tests-dummy.m */; };
+		846B575F825284AEF3DD9F04B81C8602 /* angle-mask.png in Resources */ = {isa = PBXBuildFile; fileRef = F3716C29BE8C10A29ACB28843A68CE64 /* angle-mask.png */; };
 		84837C8E7208F023E2A92A363420BEF3 /* Pods-XQProgressHUD_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DFC72829FC7E670ECB3963DBD36B335 /* Pods-XQProgressHUD_Example-dummy.m */; };
-		88D4143265AB57CC0F12D26D851C6C2A /* UIColor+XQColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D29415AA5064221DB4481BA84E04E732 /* UIColor+XQColor.m */; };
+		86E92F26B70F4F3562C283D0E734D8B9 /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 932EACE486A1968E2F893177B6A381F5 /* success@2x.png */; };
+		8D15052766FC8AAAE3CC68CA28854CBE /* u8.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0D89139E3835D1795B9F2D1B25EC6AFE /* u8.gif */; };
 		9C5E849C6CC65D3E95D5B866013ACB2E /* Pods-XQProgressHUD_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 543346C29BA520A537EF07238E55FBBC /* Pods-XQProgressHUD_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A049DA98D40FD913D3DB8AECF6E17D9A /* XQProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D28BF81746155BC1BB77D5D0542C89 /* XQProgressHUD-dummy.m */; };
+		A377A8B6BF37A68DC59E1303E4108465 /* XQProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F58849DFDCEB70C6E72A43D9B3B4D7 /* XQProgressHUD.m */; };
 		A8553A5986DF4B910CA282EBD6545EAD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58874714ED8E5E5D0B214BB0A1F97F20 /* ImageIO.framework */; };
-		AA269A4F2EE24C1E271F4A14D6DB03A2 /* XQAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 71EF595F0A863894D36ECAB4216184F0 /* XQAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA905BF67A560DA164F9959B94F9B500 /* UIColor+XQColor.h in Headers */ = {isa = PBXBuildFile; fileRef = A1397D2038F49F63A5271512074241DB /* UIColor+XQColor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6F041DDCB28323C8603147642B1ADAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B42DF2EC862EBCCC0BA11D4C0DE985 /* Foundation.framework */; };
-		DE2A26581589043185B5530B3D37F881 /* XQBeingLoadedGifImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 14D09A58E1BAFAE9E0D1BEADFA42546E /* XQBeingLoadedGifImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E5F246A3359B993FFD67E3E971074548 /* XQAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BF9299E3984635F9B9FE321461538B /* XQAnimatedView.m */; };
+		C56DE6084F7E7B1D74C768C3A62BA083 /* XQProgressHUD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 60770B4E8FCB29FB059586CDF48AEAEF /* XQProgressHUD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D48D4EB92BB056D838473C5CE3E0AE7B /* XQProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D28BF81746155BC1BB77D5D0542C89 /* XQProgressHUD-dummy.m */; };
+		E385644876CAD0C0D9ADA4BF2B65F3EB /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = D79508C2F293ABEC43BB7F1177AE79E9 /* error.png */; };
+		FE63170F95FDB50622DF60C613A6A207 /* XQProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = B693AF016BA16C0ACA05D589EDB6134B /* XQProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,10 +51,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04E89233E4E07A56E4868BE504432D9F /* success@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "success@3x.png"; sourceTree = "<group>"; };
+		0D89139E3835D1795B9F2D1B25EC6AFE /* u8.gif */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.gif; path = u8.gif; sourceTree = "<group>"; };
+		0E1B9D6B98D22AD8D4F38BBB62DCD02B /* success.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
 		11C218526D586F298C9059E3AEF20A79 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		130138FC1C8CD5566C06E9D04061F050 /* Pods-XQProgressHUD_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XQProgressHUD_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		1332E8F25024BD01302C7D459789FC06 /* Pods-XQProgressHUD_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XQProgressHUD_Example.release.xcconfig"; sourceTree = "<group>"; };
-		14D09A58E1BAFAE9E0D1BEADFA42546E /* XQBeingLoadedGifImageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = XQBeingLoadedGifImageView.h; sourceTree = "<group>"; };
 		1A13F03E743444A7EDDB9D19756CFF46 /* ResourceBundle-XQProgressHUD-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-XQProgressHUD-Info.plist"; sourceTree = "<group>"; };
 		1DF9956744131370CE16D06BE5A1CB7B /* XQProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "XQProgressHUD-prefix.pch"; sourceTree = "<group>"; };
 		2280BD461E36984ECFEA463146569FF2 /* Pods-XQProgressHUD_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-XQProgressHUD_Tests-dummy.m"; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 		42005BE2561A0063E54CD717E0FCC034 /* XQProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XQProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4321EFCA785206FC879B8E3AC73FE0D3 /* Pods-XQProgressHUD_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-XQProgressHUD_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		47BB5B152F82C94302C7726D339FA5CA /* Pods-XQProgressHUD_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-XQProgressHUD_Tests-umbrella.h"; sourceTree = "<group>"; };
+		4A73CC24B2710F56A0B0C74809DBA1C0 /* angle-mask@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "angle-mask@3x.png"; sourceTree = "<group>"; };
 		4DB00E58B0006458FC24582B7DBA1294 /* Pods-XQProgressHUD_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-XQProgressHUD_Tests.modulemap"; sourceTree = "<group>"; };
 		543346C29BA520A537EF07238E55FBBC /* Pods-XQProgressHUD_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-XQProgressHUD_Example-umbrella.h"; sourceTree = "<group>"; };
 		576F69E89D966BE8D910570348436CA8 /* Pods-XQProgressHUD_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XQProgressHUD_Tests-resources.sh"; sourceTree = "<group>"; };
@@ -72,34 +74,30 @@
 		60770B4E8FCB29FB059586CDF48AEAEF /* XQProgressHUD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "XQProgressHUD-umbrella.h"; sourceTree = "<group>"; };
 		60A455D9115DBAF81DE512385E67565F /* XQProgressHUD.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = XQProgressHUD.modulemap; sourceTree = "<group>"; };
 		67460659AA10FD1FB49CF5FC2403042A /* Pods-XQProgressHUD_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XQProgressHUD_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		70C275152D1EF571F81A74D0AC8E6B64 /* u8.gif */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.gif; path = u8.gif; sourceTree = "<group>"; };
-		71EF595F0A863894D36ECAB4216184F0 /* XQAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = XQAnimatedView.h; sourceTree = "<group>"; };
-		73FB1E4CEE3116141E62BE02444D4127 /* XQBeingLoadedGifImageView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XQBeingLoadedGifImageView.m; sourceTree = "<group>"; };
 		7657D1BA2BCE972652A91888F8F3E743 /* Pods-XQProgressHUD_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-XQProgressHUD_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		7CB748F6F37E8580267859780CDCB0FE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7DD1BF16FA874C96C240F31D50A5100B /* Pods-XQProgressHUD_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XQProgressHUD_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		86AAD64B1152EB1F52F17BFB821AC212 /* XQAnimateds.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XQAnimateds.m; sourceTree = "<group>"; };
 		87790E63972DB122B7CCDC09CC397043 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DFC72829FC7E670ECB3963DBD36B335 /* Pods-XQProgressHUD_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-XQProgressHUD_Example-dummy.m"; sourceTree = "<group>"; };
+		932EACE486A1968E2F893177B6A381F5 /* success@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
+		935874A98B2721FDA6692D4AA5F1A8B7 /* angle-mask@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "angle-mask@2x.png"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		99F69D7F5F757E32F667732B08CC3293 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		9A1205482CDDC62A3604B57A9868C8DB /* XQProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = XQProgressHUD.xcconfig; sourceTree = "<group>"; };
-		9BA49B42A22836779AA0BB6D13F5EC25 /* XQProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XQProgressHUD.m; sourceTree = "<group>"; };
-		A1397D2038F49F63A5271512074241DB /* UIColor+XQColor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIColor+XQColor.h"; sourceTree = "<group>"; };
+		9D3372654CD8AC34096CFBD96966C2F9 /* error@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "error@3x.png"; sourceTree = "<group>"; };
 		A7710E6F3105BB469051F6413AEE1DA1 /* Pods-XQProgressHUD_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XQProgressHUD_Example-resources.sh"; sourceTree = "<group>"; };
 		A7A1B7EA372B966929DB67198C8D3550 /* Pods-XQProgressHUD_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XQProgressHUD_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B1EDD49E651B9A655FC854F6B209F24F /* Pods-XQProgressHUD_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-XQProgressHUD_Example.modulemap"; sourceTree = "<group>"; };
 		B2D28BF81746155BC1BB77D5D0542C89 /* XQProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "XQProgressHUD-dummy.m"; sourceTree = "<group>"; };
-		BAE07D75E750FDCFE898DE51467C5015 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
-		C73F2C6921EE60C8A4AC66CBD3335EFF /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
-		CF60C30D77CC82D33973120160F40298 /* XQAnimateds.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = XQAnimateds.h; sourceTree = "<group>"; };
-		D0BF9299E3984635F9B9FE321461538B /* XQAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XQAnimatedView.m; sourceTree = "<group>"; };
+		B693AF016BA16C0ACA05D589EDB6134B /* XQProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = XQProgressHUD.h; sourceTree = "<group>"; };
+		C452752EF39E7E3129C78D518406FF8D /* error@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
 		D2105D70E034A8D365BA4860A453728B /* Pods-XQProgressHUD_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XQProgressHUD_Example-frameworks.sh"; sourceTree = "<group>"; };
-		D29415AA5064221DB4481BA84E04E732 /* UIColor+XQColor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XQColor.m"; sourceTree = "<group>"; };
-		E0E17340F984D574C934C76DBFC5E5EC /* XQProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = XQProgressHUD.h; sourceTree = "<group>"; };
+		D79508C2F293ABEC43BB7F1177AE79E9 /* error.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
 		E5AD0A8C847191B4802AA751B27E700F /* Pods_XQProgressHUD_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XQProgressHUD_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9E684895D61CBEAD10DAE1EEC75A7E2 /* XQProgressHUD.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XQProgressHUD.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3716C29BE8C10A29ACB28843A68CE64 /* angle-mask.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "angle-mask.png"; sourceTree = "<group>"; };
 		F96CB02E3D94B74A77B2D1743F5BD9B3 /* Pods-XQProgressHUD_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-XQProgressHUD_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		F9F58849DFDCEB70C6E72A43D9B3B4D7 /* XQProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = XQProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +140,7 @@
 		0DB97E5CC76385CC7C545D73DF89BF4A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				47B87D44A63815DE71E7645845EA19C9 /* XQProgressHUD */,
+				1CA07E30DA3CE26666CF52DFB7ABA245 /* XQProgressHUD */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -162,6 +160,31 @@
 				306450C0B8C9B350D5B82547C59D34EF /* Pods-XQProgressHUD_Tests */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		18468B975A10EC8822EE8295F3189327 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				F3716C29BE8C10A29ACB28843A68CE64 /* angle-mask.png */,
+				935874A98B2721FDA6692D4AA5F1A8B7 /* angle-mask@2x.png */,
+				4A73CC24B2710F56A0B0C74809DBA1C0 /* angle-mask@3x.png */,
+				D79508C2F293ABEC43BB7F1177AE79E9 /* error.png */,
+				C452752EF39E7E3129C78D518406FF8D /* error@2x.png */,
+				9D3372654CD8AC34096CFBD96966C2F9 /* error@3x.png */,
+				0E1B9D6B98D22AD8D4F38BBB62DCD02B /* success.png */,
+				932EACE486A1968E2F893177B6A381F5 /* success@2x.png */,
+				04E89233E4E07A56E4868BE504432D9F /* success@3x.png */,
+				0D89139E3835D1795B9F2D1B25EC6AFE /* u8.gif */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		1CA07E30DA3CE26666CF52DFB7ABA245 /* XQProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				18468B975A10EC8822EE8295F3189327 /* Assets */,
+			);
+			path = XQProgressHUD;
 			sourceTree = "<group>";
 		};
 		306450C0B8C9B350D5B82547C59D34EF /* Pods-XQProgressHUD_Tests */ = {
@@ -187,45 +210,18 @@
 			children = (
 				0DB97E5CC76385CC7C545D73DF89BF4A /* Resources */,
 				D6CDB62DE6B6269FF999A30EF0718837 /* Support Files */,
-				4F3B36C151C2F63E4FE1DDDBA4F6C223 /* XQProgressHUD */,
+				57CF24F6118DE2C645F354994E5EA20F /* XQProgressHUD */,
 			);
 			name = XQProgressHUD;
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		47B87D44A63815DE71E7645845EA19C9 /* XQProgressHUD */ = {
+		57CF24F6118DE2C645F354994E5EA20F /* XQProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				B53542F4BE2D361ABC0F348A0A1EA6AF /* Assets */,
+				A3FF3040E0EE08D8931611D5B3C513E3 /* Classes */,
 			);
 			path = XQProgressHUD;
-			sourceTree = "<group>";
-		};
-		4F3B36C151C2F63E4FE1DDDBA4F6C223 /* XQProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				72DE1DABAE6E04660277AE183EB70744 /* Classes */,
-			);
-			path = XQProgressHUD;
-			sourceTree = "<group>";
-		};
-		72DE1DABAE6E04660277AE183EB70744 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				A1397D2038F49F63A5271512074241DB /* UIColor+XQColor.h */,
-				D29415AA5064221DB4481BA84E04E732 /* UIColor+XQColor.m */,
-				C73F2C6921EE60C8A4AC66CBD3335EFF /* UIWindow+SIUtils.h */,
-				BAE07D75E750FDCFE898DE51467C5015 /* UIWindow+SIUtils.m */,
-				CF60C30D77CC82D33973120160F40298 /* XQAnimateds.h */,
-				86AAD64B1152EB1F52F17BFB821AC212 /* XQAnimateds.m */,
-				71EF595F0A863894D36ECAB4216184F0 /* XQAnimatedView.h */,
-				D0BF9299E3984635F9B9FE321461538B /* XQAnimatedView.m */,
-				14D09A58E1BAFAE9E0D1BEADFA42546E /* XQBeingLoadedGifImageView.h */,
-				73FB1E4CEE3116141E62BE02444D4127 /* XQBeingLoadedGifImageView.m */,
-				E0E17340F984D574C934C76DBFC5E5EC /* XQProgressHUD.h */,
-				9BA49B42A22836779AA0BB6D13F5EC25 /* XQProgressHUD.m */,
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 		7C23F9A3E0B53D762139717BC787EBBE /* Development Pods */ = {
@@ -247,6 +243,15 @@
 			);
 			sourceTree = "<group>";
 		};
+		A3FF3040E0EE08D8931611D5B3C513E3 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B693AF016BA16C0ACA05D589EDB6134B /* XQProgressHUD.h */,
+				F9F58849DFDCEB70C6E72A43D9B3B4D7 /* XQProgressHUD.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		A9BA61BD82E8D351947F8D5C5B60673C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,14 +271,6 @@
 				42005BE2561A0063E54CD717E0FCC034 /* XQProgressHUD.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B53542F4BE2D361ABC0F348A0A1EA6AF /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				70C275152D1EF571F81A74D0AC8E6B64 /* u8.gif */,
-			);
-			path = Assets;
 			sourceTree = "<group>";
 		};
 		D6CDB62DE6B6269FF999A30EF0718837 /* Support Files */ = {
@@ -312,17 +309,12 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		649D640EBFB2818D5D59CE9255A678D8 /* Headers */ = {
+		557F0BEFF15FC0853EC49C146B52B400 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA905BF67A560DA164F9959B94F9B500 /* UIColor+XQColor.h in Headers */,
-				2A19B9058DD22817EAD35D7F8A8316CC /* UIWindow+SIUtils.h in Headers */,
-				4F6DECA244C0F6FCC1D5ED0B09A22CFE /* XQAnimateds.h in Headers */,
-				AA269A4F2EE24C1E271F4A14D6DB03A2 /* XQAnimatedView.h in Headers */,
-				DE2A26581589043185B5530B3D37F881 /* XQBeingLoadedGifImageView.h in Headers */,
-				75FEE2722AA3112ADC73FAF033A8FEA7 /* XQProgressHUD-umbrella.h in Headers */,
-				6A26E8254B2E660919DBD678646A021E /* XQProgressHUD.h in Headers */,
+				C56DE6084F7E7B1D74C768C3A62BA083 /* XQProgressHUD-umbrella.h in Headers */,
+				FE63170F95FDB50622DF60C613A6A207 /* XQProgressHUD.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,10 +359,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 70CDACB7A734DC7C766962BEB9D2E916 /* Build configuration list for PBXNativeTarget "XQProgressHUD" */;
 			buildPhases = (
-				1F336657C5828359B37ADAE6BBB889C1 /* Sources */,
+				C80F85D338368FDEA548880DE4216379 /* Sources */,
 				5E778911AD5E70219A88AF3BCE11BA9D /* Frameworks */,
 				81FBBBBF931B226669DAB725775B9DBC /* Resources */,
-				649D640EBFB2818D5D59CE9255A678D8 /* Headers */,
+				557F0BEFF15FC0853EC49C146B52B400 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -405,7 +397,7 @@
 			buildPhases = (
 				206478E1F2A774D4B4BF2D4389327D98 /* Sources */,
 				A52DFDE3326F5FE28E8952456ADD8155 /* Frameworks */,
-				B5ED2CB67446FDCA2DA8249A290550C3 /* Resources */,
+				7D9D5A5480FC4EC20797397F8306729B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -446,19 +438,28 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7D9D5A5480FC4EC20797397F8306729B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				846B575F825284AEF3DD9F04B81C8602 /* angle-mask.png in Resources */,
+				2958CA91E87F14D9DBCF19431DB251DF /* angle-mask@2x.png in Resources */,
+				204E4E1C52AEEDED779C326505C12A99 /* angle-mask@3x.png in Resources */,
+				E385644876CAD0C0D9ADA4BF2B65F3EB /* error.png in Resources */,
+				49775946BD59B7F1DBB4CC72FAE79693 /* error@2x.png in Resources */,
+				671B512CB079CC3F2F652D720E99CFCA /* error@3x.png in Resources */,
+				71FEA5E93E240F248C3F6DC3BB7774D5 /* success.png in Resources */,
+				86E92F26B70F4F3562C283D0E734D8B9 /* success@2x.png in Resources */,
+				1BFF24D395C0D0331909CB05781C7DAA /* success@3x.png in Resources */,
+				8D15052766FC8AAAE3CC68CA28854CBE /* u8.gif in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81FBBBBF931B226669DAB725775B9DBC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				43F8318D3973B43F392D6BAC5652BB47 /* XQProgressHUD.bundle in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5ED2CB67446FDCA2DA8249A290550C3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				18A8559F1FCBF11F2E6273415F114429 /* u8.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,20 +471,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				82ABE46A4A08FA030910257915B09C46 /* Pods-XQProgressHUD_Tests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1F336657C5828359B37ADAE6BBB889C1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88D4143265AB57CC0F12D26D851C6C2A /* UIColor+XQColor.m in Sources */,
-				4E5F712D6CA397F5A1E9765363E0DEEC /* UIWindow+SIUtils.m in Sources */,
-				683018E67988ACA6C56CDB0847ACD813 /* XQAnimateds.m in Sources */,
-				E5F246A3359B993FFD67E3E971074548 /* XQAnimatedView.m in Sources */,
-				6F6270F9C3DBCB02ADC3ECB9B3BAC2A3 /* XQBeingLoadedGifImageView.m in Sources */,
-				A049DA98D40FD913D3DB8AECF6E17D9A /* XQProgressHUD-dummy.m in Sources */,
-				03181ED6E483306ECABA445F435189AD /* XQProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +486,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				84837C8E7208F023E2A92A363420BEF3 /* Pods-XQProgressHUD_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C80F85D338368FDEA548880DE4216379 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D48D4EB92BB056D838473C5CE3E0AE7B /* XQProgressHUD-dummy.m in Sources */,
+				A377A8B6BF37A68DC59E1303E4108465 /* XQProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
