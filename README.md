@@ -20,7 +20,8 @@ it, simply add the following line to your Podfile:
 pod "XQProgressHUD"
 ```
 
-## Use
+## Usage
+At first, import XQProgressHUD:
 ```
 #import "XQProgressHUD.h"
 ```
