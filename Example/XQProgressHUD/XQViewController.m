@@ -222,13 +222,13 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.yOffset = 240.0f;
     hud.textColor = [UIColor redColor];
     hud.text = @"Custome";
-    hud.suffixPointAnimatedDuration = 0.5f;
+    hud.suffixPointAnimationDuration = 0.5f;
     hud.userInteractionEnabled = NO;
+    hud.didDismissHandler = ^(){
+        NSLog(@"HUD Completion");
+    };
     [hud show];
     [hud dismissAfterDelay:5.0f];
-    [hud didDissmissHandler:^{
-        NSLog(@"HUD Completion");
-    }];
 }
 
 - (void)gifModeExample

@@ -10,7 +10,14 @@
 
 #define MainThreadAssert() NSAssert([NSThread isMainThread], @"XQProgressHUD needs to be accessed on the main thread.");
 
-
+static CGFloat const textHeightScalingFactor = 5.3f;
+static CGFloat const wideSpacing = 10.0f;
+static CGFloat const maximumWidth = 140.0f;
+static CGFloat const atTheTopOfTheScalingFactor = 8.5f;
+static CGFloat const indicatorViewSpacing = 15.0f;
+static CGFloat const maximumTextWidth = 260.0f;
+static CGFloat const minimumTextHeight = 20.0f;
+static CGFloat const defaultWidth = 120.0f;
 
 #pragma mark -
 #pragma mark - XQRootViewController
@@ -39,32 +46,32 @@
 
 #pragma mark - 
 #pragma mark - XQAnimateds
-@implementation XQProgressHUDAnimatedClass
+@implementation XQAnimationHelper
 
-+ (CAAnimationGroup *)cyclicRotationAnimatedWithDuration:(CFTimeInterval)duration
++ (CAAnimationGroup *)cyclicRotationAnimationWithDuration:(CFTimeInterval)duration
 {
-    CABasicAnimation *animated = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     
-    animated.duration = duration / 2.0f;
-    animated.repeatCount = 1;
-    animated.fromValue = @0;
-    animated.toValue = @1;
-    animated.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animated.removedOnCompletion = NO;
-    animated.fillMode = kCAFillModeForwards;
+    animation.duration = duration / 2.0f;
+    animation.repeatCount = 1;
+    animation.fromValue = @0;
+    animation.toValue = @1;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
     
-    CABasicAnimation *animated2 = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
-    animated2.beginTime = duration / 2.0f;
-    animated2.duration = duration / 2.0f;
-    animated2.repeatCount = 1;
-    animated2.fromValue = @0;
-    animated2.toValue = @1;
-    animated2.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animated2.removedOnCompletion = NO;
-    animated2.fillMode = kCAFillModeForwards;
+    CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+    animation2.beginTime = duration / 2.0f;
+    animation2.duration = duration / 2.0f;
+    animation2.repeatCount = 1;
+    animation2.fromValue = @0;
+    animation2.toValue = @1;
+    animation2.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation2.removedOnCompletion = NO;
+    animation2.fillMode = kCAFillModeForwards;
     
     CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.animations = @[animated, animated2];
+    group.animations = @[animation, animation2];
     group.duration = duration;
     group.repeatCount = CGFLOAT_MAX;
     group.removedOnCompletion = NO;
@@ -73,19 +80,19 @@
     return group;
 }
 
-+ (CABasicAnimation *)rotatingAnimatedWithDuration:(CFTimeInterval)duration
++ (CABasicAnimation *)rotatingAnimationWithDuration:(CFTimeInterval)duration
 {
     CAMediaTimingFunction *linearCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    CABasicAnimation *animated = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-    animated.fromValue = 0;
-    animated.toValue = @(M_PI*2);
-    animated.duration = duration;
-    animated.timingFunction = linearCurve;
-    animated.removedOnCompletion = NO;
-    animated.repeatCount = INFINITY;
-    animated.fillMode = kCAFillModeForwards;
-    animated.autoreverses = NO;
-    return animated;
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    animation.fromValue = 0;
+    animation.toValue = @(M_PI*2);
+    animation.duration = duration;
+    animation.timingFunction = linearCurve;
+    animation.removedOnCompletion = NO;
+    animation.repeatCount = INFINITY;
+    animation.fillMode = kCAFillModeForwards;
+    animation.autoreverses = NO;
+    return animation;
 }
 
 @end
@@ -94,16 +101,16 @@
 
 #pragma mark -
 #pragma mark - XQAnimatedView
-@interface XQAnimatedView ()
+@interface XQAnimationView ()
 
 @property (nonatomic, strong) UIView        *indicatorView;
 @property (nonatomic, strong) CAShapeLayer  *outerLayer;
 @property (nonatomic, strong) CAShapeLayer  *innerLayer;
-@property (nonatomic, strong) CAShapeLayer  *animatedLayer;
+@property (nonatomic, strong) CAShapeLayer  *animationLayer;
 
 @end
 
-@implementation XQAnimatedView
+@implementation XQAnimationView
 - (instancetype)init
 {
     return [self initWithFrame:CGRectZero];
@@ -182,7 +189,7 @@
 - (void)setUpInnerLayer
 {
     _innerLayer = [self newCircleLayerWithRadius:self.radius borderWidth:self.radius / 12.5f borderColor:self.progressTintColor];
-    [_innerLayer addAnimation:[XQProgressHUDAnimatedClass cyclicRotationAnimatedWithDuration:self.animatedDuration] forKey:nil];
+    [_innerLayer addAnimation:[XQAnimationHelper cyclicRotationAnimationWithDuration:self.animationDuration] forKey:nil];
     [self.outerLayer addSublayer:_innerLayer];
 }
 
@@ -196,30 +203,30 @@
                                                      endAngle    :M_PI / 2 + M_PI * 5
                                                      clockwise   :YES];
     
-    _animatedLayer = [CAShapeLayer layer];
-    _animatedLayer.contentsScale = [UIScreen mainScreen].scale;
-    _animatedLayer.frame = rect;
-    _animatedLayer.fillColor = [UIColor clearColor].CGColor;
-    _animatedLayer.strokeColor = self.progressTintColor.CGColor;
-    _animatedLayer.lineWidth = self.radius / 12.5f;
-    _animatedLayer.lineCap = kCALineCapRound;
-    _animatedLayer.lineJoin = kCALineJoinBevel;
-    _animatedLayer.path = path.CGPath;
+    _animationLayer = [CAShapeLayer layer];
+    _animationLayer.contentsScale = [UIScreen mainScreen].scale;
+    _animationLayer.frame = rect;
+    _animationLayer.fillColor = [UIColor clearColor].CGColor;
+    _animationLayer.strokeColor = self.progressTintColor.CGColor;
+    _animationLayer.lineWidth = self.radius / 12.5f;
+    _animationLayer.lineCap = kCALineCapRound;
+    _animationLayer.lineJoin = kCALineJoinBevel;
+    _animationLayer.path = path.CGPath;
     
     CALayer     *maskLayer = [CALayer layer];
     NSBundle    *imageBundle = [self bundle];
     NSString    *resourcePath = [imageBundle pathForResource:@"angle-mask" ofType:@"png"];
     maskLayer.contents = (id)[UIImage imageWithContentsOfFile:resourcePath].CGImage;
-    maskLayer.frame = _animatedLayer.bounds;
-    _animatedLayer.mask = maskLayer;
-    [_animatedLayer.mask addAnimation:[XQProgressHUDAnimatedClass rotatingAnimatedWithDuration:_animatedDuration] forKey:nil];
-    [self.layer addSublayer:_animatedLayer];
+    maskLayer.frame = _animationLayer.bounds;
+    _animationLayer.mask = maskLayer;
+    [_animationLayer.mask addAnimation:[XQAnimationHelper rotatingAnimationWithDuration:_animationDuration] forKey:nil];
+    [self.layer addSublayer:_animationLayer];
 }
 
 - (void)setUpIndicatorView
 {
     _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [(UIActivityIndicatorView *)_indicatorView setFrame:CGRectMake(0, 0, 45, 45)];
+    [(UIActivityIndicatorView *)_indicatorView setFrame:CGRectMake(0, 0, 40, 40)];
     [(UIActivityIndicatorView *)_indicatorView setColor:_progressTintColor];
     [(UIActivityIndicatorView *)_indicatorView startAnimating];
     [self addSubview:_indicatorView];
@@ -264,7 +271,7 @@
 #ifdef DEBUG
 - (void)dealloc
 {
-    NSLog(@"AaimatedView dealloc");
+    NSLog(@"AnimationView dealloc");
 }
 #endif
 
@@ -279,16 +286,15 @@
 
 @property (nonatomic) UIWindow                      *overlayWindow;
 @property (nonatomic, strong) UIView                *xq_backgroundView;
-@property (nonatomic, strong) XQAnimatedView        *animatedView;
+@property (nonatomic, strong) XQAnimationView        *animationView;
 @property (nonatomic, strong) XQRootViewController  *rootViewController;
 @property (nonatomic, strong) UILabel               *statusLabel;
 @property (nonatomic, strong) UILabel               *indicatorLabel;
-@property (nonatomic, strong) UILabel               *pointLabel;
+@property (nonatomic, strong) UILabel               *suffixPointLabel;
 @property (nonatomic, strong) UIImageView           *imageView;
 @property (nonatomic) NSTimer                       *dismissTimer;
-@property (nonatomic, weak) NSTimer                 *weekTimer;
+@property (nonatomic, weak) NSTimer                 *suffixPointTimer;
 @property (nonatomic, assign) BOOL                  isYOffset;
-@property (nonatomic, copy) XQProgressHUDHandler    didDismissHandler;
 
 @end
 
@@ -314,13 +320,29 @@
     if (self) {
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5f];
+        self.userInteractionEnabled = YES;
+        
+        _mode = XQProgressHUDModeIndicator;
+        _size = CGSizeMake(120.0f, 90.0f);
+        _textColor = [UIColor xq_animationViewDefaultColor];
+        _isYOffset = NO;
+        _ringRadius = 20.0f;
+        _gifImageName = @"u8";
+        _trackTintColor = [UIColor whiteColor];
+        _progressTintColor = [UIColor xq_animationViewDefaultColor];
+        _animationDuration = 1.5f;
+        _suffixPointEnabled = YES;
+        _foregroundBorderWidth = 0.0f;
+        _foregroundBorderColor = [UIColor clearColor];
+        _foregroundCornerRaidus = 5.0f;
+        _suffixPointAnimationDuration = 0.2f;
         
         // Set up view hierarchy
         _xq_backgroundView = [[UIView alloc] init];
         _xq_backgroundView.backgroundColor = [UIColor xq_hudForegroundColor];
-        _xq_backgroundView.layer.cornerRadius = 5.0f;
-        _xq_backgroundView.layer.borderColor = [UIColor clearColor].CGColor;
-        _xq_backgroundView.layer.borderWidth = 0.0f;
+        _xq_backgroundView.layer.cornerRadius = self.foregroundCornerRaidus;
+        _xq_backgroundView.layer.borderColor = self.foregroundBorderColor.CGColor;
+        _xq_backgroundView.layer.borderWidth = self.foregroundBorderWidth;
         _xq_backgroundView.layer.masksToBounds = YES;
         _xq_backgroundView.hidden = YES;
         _xq_backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -330,19 +352,20 @@
         _indicatorLabel.backgroundColor = [UIColor clearColor];
         _indicatorLabel.textAlignment = NSTextAlignmentRight;
         _indicatorLabel.font = [UIFont systemFontOfSize:15.0f];
-        _indicatorLabel.textColor = [UIColor xq_animatedViewDefaultColor];
+        _indicatorLabel.textColor = [UIColor xq_animationViewDefaultColor];
         _indicatorLabel.numberOfLines = 1;
+        _indicatorLabel.text = @"Loading";
         _indicatorLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_xq_backgroundView addSubview:_indicatorLabel];
         
-        _pointLabel = [[UILabel alloc] init];
-        _pointLabel.backgroundColor = [UIColor clearColor];
-        _pointLabel.textAlignment = NSTextAlignmentLeft;
-        _pointLabel.font = [UIFont systemFontOfSize:15.0f];
-        _pointLabel.textColor = [UIColor xq_animatedViewDefaultColor];
-        _pointLabel.text = @".";
-        _pointLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [_xq_backgroundView addSubview:_pointLabel];
+        _suffixPointLabel = [[UILabel alloc] init];
+        _suffixPointLabel.backgroundColor = [UIColor clearColor];
+        _suffixPointLabel.textAlignment = NSTextAlignmentLeft;
+        _suffixPointLabel.font = [UIFont systemFontOfSize:15.0f];
+        _suffixPointLabel.textColor = [UIColor xq_animationViewDefaultColor];
+        _suffixPointLabel.text = @".";
+        _suffixPointLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [_xq_backgroundView addSubview:_suffixPointLabel];
         
         
         _imageView = [[UIImageView alloc] init];
@@ -353,9 +376,9 @@
         [self addSubview:_imageView];
         
         _statusLabel = [[UILabel alloc] init];
-        _statusLabel.layer.cornerRadius = 5.0f;
-        _statusLabel.layer.borderWidth = 0.0f;
-        _statusLabel.layer.borderColor = [UIColor clearColor].CGColor;
+        _statusLabel.layer.cornerRadius = self.foregroundCornerRaidus;
+        _statusLabel.layer.borderWidth = self.foregroundBorderWidth;
+        _statusLabel.layer.borderColor = self.foregroundBorderColor.CGColor;
         _statusLabel.layer.masksToBounds = YES;
         _statusLabel.textAlignment = NSTextAlignmentCenter;
         _statusLabel.font = [UIFont systemFontOfSize:15.0f];
@@ -365,18 +388,6 @@
         _statusLabel.hidden = YES;
         _statusLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_statusLabel];
-        
-        _isYOffset = NO;
-        _suffixPointEnabled = YES;
-        _progressTintColor = [UIColor xq_animatedViewDefaultColor];
-        _trackTintColor = [UIColor whiteColor];
-        _animatedDuration = 1.5f;
-        _suffixPointAnimatedDuration = 0.2f;
-        _mode = XQProgressHUDModeIndicator;
-        _textColor = [UIColor xq_animatedViewDefaultColor];
-        _size = CGSizeMake(120.0f, 90.0f);
-        _ringRadius = 20.0f;
-        self.text = @"Loading";
     }
     
     return self;
@@ -394,7 +405,7 @@
     if (!self.overlayWindow) {
         self.overlayWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
         self.overlayWindow.screen = [UIScreen mainScreen];
-        self.overlayWindow.windowLevel = UIWindowLevelAlert;
+        self.overlayWindow.windowLevel = UIWindowLevelNormal;
         self.overlayWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.overlayWindow.opaque = NO;
         self.overlayWindow.userInteractionEnabled = self.userInteractionEnabled;
@@ -405,6 +416,11 @@
     
     [self updateIndicators];
     [self setUpViewsLayout];
+    
+    self.overlayWindow.alpha = 0.0f;
+    [UIView animateWithDuration:0.5f animations:^{
+        self.overlayWindow.alpha = 1.0f;
+    }];
 }
 
 - (void)dismiss
@@ -421,11 +437,6 @@
     else {
         [self responseToDismissTimer];
     }
-}
-
-- (void)didDissmissHandler:(XQProgressHUDHandler)handler
-{
-    _didDismissHandler = handler;
 }
 
 #pragma mark - Private methods
@@ -448,35 +459,35 @@
             self.statusLabel.hidden = YES;
             self.xq_backgroundView.hidden = NO;
             
-            if (self.animatedView) {
-                [self.animatedView removeFromSuperview];
-                self.animatedView = nil;
+            if (self.animationView) {
+                [self.animationView removeFromSuperview];
+                self.animationView = nil;
             }
             
-            _animatedView = [[XQAnimatedView alloc] init];
-            _animatedView.mode = self.mode;
-            _animatedView.radius = self.ringRadius;
-            _animatedView.trackTintColor = self.trackTintColor;
-            _animatedView.progressTintColor = self.progressTintColor;
-            _animatedView.animatedDuration = self.animatedDuration;
-            _animatedView.translatesAutoresizingMaskIntoConstraints = NO;
-            [_animatedView loadAnimateds];
-            [self.xq_backgroundView addSubview:_animatedView];
+            _animationView = [[XQAnimationView alloc] init];
+            _animationView.mode = self.mode;
+            _animationView.radius = self.ringRadius;
+            _animationView.trackTintColor = self.trackTintColor;
+            _animationView.progressTintColor = self.progressTintColor;
+            _animationView.animationDuration = self.animationDuration;
+            _animationView.translatesAutoresizingMaskIntoConstraints = NO;
+            [_animationView loadAnimateds];
+            [self.xq_backgroundView addSubview:_animationView];
             
             if (self.mode == XQProgressHUDModeSuccess) {
                 self.suffixPointEnabled = NO;
                 UIImageView *imageView = [self loadCustomIndicatorName:@"success"];
                 self.customIndicator = imageView;
-                [self.animatedView addSubview:_customIndicator];
+                [self.animationView addSubview:_customIndicator];
             }
             else if (self.mode == XQProgressHUDModeError) {
                 self.suffixPointEnabled = NO;
                 UIImageView *imageView = [self loadCustomIndicatorName:@"error"];
                 self.customIndicator = imageView;
-                [self.animatedView addSubview:_customIndicator];
+                [self.animationView addSubview:_customIndicator];
             }
             else if (self.mode == XQProgressHUDModeCustomIndicator){
-                [self.animatedView addSubview:_customIndicator];
+                [self.animationView addSubview:_customIndicator];
             }
             break;
             
@@ -496,11 +507,6 @@
         default:
             break;
     }
-    
-    self.overlayWindow.alpha = 0.0f;
-    [UIView animateWithDuration:0.5f animations:^{
-        self.overlayWindow.alpha = 1.0f;
-    }];
 }
 
 - (void)setUpViewsLayout
@@ -520,23 +526,25 @@
         case XQProgressHUDModeError:
             {
                 if (self.suffixPointEnabled) {
-                    width = foregroundWidth; height = foregroundHeight; textHeight = height / 5.3f;
+                    width = foregroundWidth;
+                    height = foregroundHeight;
+                    textHeight = height / textHeightScalingFactor;
                 }
                 else {
-                    width = [self size:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width + 10.0f;
+                    width = [self size:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width + wideSpacing;
                     
                     if (width <= foregroundWidth) {
                         width = foregroundWidth;
                     }
-                    else if (foregroundWidth > 120.0f){
+                    else if (foregroundWidth > defaultWidth){
                         width = foregroundWidth;
                     }
                     else{
-                        width = 140.0f;
+                        width = maximumWidth;
                     }
                     
-                    textHeight = [self size:CGSizeMake(width - 10.0f, MAXFLOAT) text:self.text font:self.textFont].height + 1;
-                    height = textHeight + (foregroundHeight / 8.5f) + self.ringRadius * 2 + 5 + 10;
+                    textHeight = [self size:CGSizeMake(width - wideSpacing, MAXFLOAT) text:self.text font:self.textFont].height + 1;
+                    height = textHeight + (foregroundHeight / atTheTopOfTheScalingFactor) + self.ringRadius * 2 + indicatorViewSpacing;
                     
                     if (height <= foregroundHeight) {
                         height = foregroundHeight;
@@ -548,9 +556,9 @@
                 }
                 
                 [self.xq_backgroundView removeConstraints:self.xq_backgroundView.constraints];
-                [self.animatedView removeConstraints:self.animatedView.constraints];
+                [self.animationView removeConstraints:self.animationView.constraints];
                 [self.indicatorLabel removeConstraints:self.indicatorLabel.constraints];
-                [self.pointLabel removeConstraints:self.pointLabel.constraints];
+                [self.suffixPointLabel removeConstraints:self.suffixPointLabel.constraints];
                 [self.customIndicator removeConstraints:self.customIndicator.constraints];
                 
                 // XQBackgroundViewLayout
@@ -566,43 +574,43 @@
                 }
                 
                 // AnimatedViewLayout
-                top = foregroundHeight / 8.5f;
-                [self.animatedView addConstraint:[NSLayoutConstraint constraintWithItem:self.animatedView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.ringRadius * 2]];
-                [self.animatedView addConstraint:[NSLayoutConstraint constraintWithItem:self.animatedView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.ringRadius * 2]];
+                top = foregroundHeight / atTheTopOfTheScalingFactor;
+                [self.animationView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.ringRadius * 2]];
+                [self.animationView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.ringRadius * 2]];
                 
-                [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.animatedView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-                [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.animatedView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeTop multiplier:1 constant:top]];
+                [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+                [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.animationView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeTop multiplier:1 constant:top]];
                 
                 // IndicatorLabelLayout
                 CGFloat maxX = (foregroundWidth / 2.0f) + (self.ringRadius);
-                [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.animatedView attribute:NSLayoutAttributeBottom multiplier:1 constant:5.0f]];
+                [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.animationView attribute:NSLayoutAttributeBottom multiplier:1 constant:5.0f]];
                 [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeLeft multiplier:1 constant:5.0f]];
-                [self.indicatorLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.suffixPointEnabled ? maxX - 10.0f : width - 10.0f]];
+                [self.indicatorLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.suffixPointEnabled ? maxX - wideSpacing : width - wideSpacing]];
                 [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutAttributeBottom toItem:self.xq_backgroundView attribute:NSLayoutAttributeBottom multiplier:1 constant:-5]];
                 
                 // PointLabelLayer
                 if (self.suffixPointEnabled) {
-                    self.pointLabel.hidden = NO;
-                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.pointLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutAttributeTop toItem:self.animatedView attribute:NSLayoutAttributeBottom multiplier:1 constant:5.0f]];
-                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.pointLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeRight multiplier:1 constant:-2.0f]];
-                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.pointLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.indicatorLabel attribute:NSLayoutAttributeRight multiplier:1 constant:2.0f]];
-                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.pointLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutAttributeBottom toItem:self.xq_backgroundView attribute:NSLayoutAttributeBottom multiplier:1 constant:-5]];
-                     [self addPointLabelTimer];
+                    self.suffixPointLabel.hidden = NO;
+                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutAttributeTop toItem:self.animationView attribute:NSLayoutAttributeBottom multiplier:1 constant:5.0f]];
+                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeRight multiplier:1 constant:-2.0f]];
+                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.indicatorLabel attribute:NSLayoutAttributeRight multiplier:1 constant:2.0f]];
+                    [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutAttributeBottom toItem:self.xq_backgroundView attribute:NSLayoutAttributeBottom multiplier:1 constant:-5]];
+                     [self setUpTheSuffixPointTimer];
                     self.indicatorLabel.textAlignment = NSTextAlignmentRight;
                     self.indicatorLabel.numberOfLines = 1;
                 }
                 else {
-                    self.pointLabel.hidden = YES;
-                     [self removeWeekTimer];
+                    self.suffixPointLabel.hidden = YES;
+                     [self removeSuffixPointTimer];
                     self.indicatorLabel.textAlignment = NSTextAlignmentCenter;
                     self.indicatorLabel.numberOfLines = 0;
                 }
                 
                 if ((self.mode == XQProgressHUDModeCustomIndicator) || (self.mode == XQProgressHUDModeSuccess) || (self.mode == XQProgressHUDModeError)) {
-                    [self.animatedView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.animatedView attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
-                    [self.animatedView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.animatedView attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
-                    [self.animatedView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.animatedView attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
-                    [self.animatedView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.animatedView attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+                    [self.animationView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.animationView attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+                    [self.animationView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.animationView attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+                    [self.animationView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.animationView attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+                    [self.animationView addConstraint:[NSLayoutConstraint constraintWithItem:self.customIndicator attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.animationView attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
                 }
                 
                 break;
@@ -628,19 +636,19 @@
             {
                 width = [self size:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width;
                 
-                if (width >= 260.0f) {
-                    width = 260.0f;
+                if (width >= maximumTextWidth) {
+                    width = maximumTextWidth;
                 }
                 
                 height = [self size:CGSizeMake(width, MAXFLOAT) text:self.text font:self.textFont].height;
                 
-                if (height <= 20) {
-                    height = 20;
+                if (height <= minimumTextHeight) {
+                    height = minimumTextHeight;
                 }
                 
                 [self.statusLabel removeConstraints:self.statusLabel.constraints];
                 [self addConstraint:[NSLayoutConstraint constraintWithItem:self.statusLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-                [self addConstraint:[NSLayoutConstraint constraintWithItem:self.statusLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:self.isYOffset ? -self.yOffset : -40]];
+                [self addConstraint:[NSLayoutConstraint constraintWithItem:self.statusLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:self.isYOffset ? -(self.yOffset) : -40]];
                 [self.statusLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.statusLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:width + 20]];
                 [self.statusLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.statusLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1 constant:height + 10]];
                 break;
@@ -655,18 +663,18 @@
     return imgView;
 }
 
-- (void)addPointLabelTimer
+- (void)setUpTheSuffixPointTimer
 {
-    [self removeWeekTimer];
-    _weekTimer = [NSTimer scheduledTimerWithTimeInterval:self.suffixPointAnimatedDuration target:self selector:@selector(weekTime:) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_weekTimer forMode:NSDefaultRunLoopMode];
+    [self removeSuffixPointTimer];
+    self.suffixPointTimer = [NSTimer scheduledTimerWithTimeInterval:self.suffixPointAnimationDuration target:self selector:@selector(weekTime:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.suffixPointTimer forMode:NSDefaultRunLoopMode];
 }
 
-- (void)removeWeekTimer
+- (void)removeSuffixPointTimer
 {
-    if (self.weekTimer && self.weekTimer.isValid) {
-        [self.weekTimer invalidate];
-        self.weekTimer = nil;
+    if (self.suffixPointTimer && self.suffixPointTimer.isValid) {
+        [self.suffixPointTimer invalidate];
+        self.suffixPointTimer = nil;
     }
 }
 
@@ -684,42 +692,22 @@
     return iSize;
 }
 
-- (void)hideAnimated:(void (^)(void))completion
+#pragma mark - Action
+- (void)responseToDismissTimer
 {
     self.overlayWindow.alpha = 1.0f;
     [UIView animateWithDuration:0.5f animations:^{
         self.overlayWindow.alpha = 0;
     } completion:^(BOOL finished) {
-        completion();
-    }];
-}
-
-#pragma mark - Action
-- (void)responseToDismissTimer
-{
-    [self hideAnimated:^{
         // Remove timer
         [self removeDismissTimer];
-        [self removeWeekTimer];
+        [self removeSuffixPointTimer];
         
         // Dismiss HUD
-        [_overlayWindow removeFromSuperview];
         _overlayWindow.hidden = YES;
         _overlayWindow = nil;
         _rootViewController = nil;
-        self.userInteractionEnabled = YES;
-        _isYOffset = NO;
-        _suffixPointEnabled = YES;
-        _progressTintColor = [UIColor xq_animatedViewDefaultColor];
-        _trackTintColor = [UIColor whiteColor];
-        _animatedDuration = 1.5f;
-        _suffixPointAnimatedDuration = 0.2f;
-        _mode = XQProgressHUDModeIndicator;
-        _textColor = [UIColor xq_animatedViewDefaultColor];
-        _size = CGSizeMake(120.0f, 90.0f);
-        _ringRadius = 20.0f;
-        self.text = @"Loading";
-        
+
         // Completion handler
         if (self.didDismissHandler) {
             self.didDismissHandler();
@@ -729,14 +717,14 @@
 
 - (void)weekTime:(NSTimer *)timer
 {
-    if ([self.pointLabel.text isEqualToString:@"."]) {
-        self.pointLabel.text = @". .";
+    if ([self.suffixPointLabel.text isEqualToString:@"."]) {
+        self.suffixPointLabel.text = @". .";
     }
-    else if ([self.pointLabel.text isEqualToString:@". ."]) {
-        self.pointLabel.text = @". . .";
+    else if ([self.suffixPointLabel.text isEqualToString:@". ."]) {
+        self.suffixPointLabel.text = @". . .";
     }
     else {
-        self.pointLabel.text = @".";
+        self.suffixPointLabel.text = @".";
     }
 }
 
@@ -753,6 +741,7 @@
 {
     MainThreadAssert();
     self.xq_backgroundView.layer.borderColor = foregroundBorderColor.CGColor;
+    self.statusLabel.layer.borderColor = foregroundBorderColor.CGColor;
 }
 
 - (void)setTrackTintColor:(UIColor *)trackTintColor
@@ -766,7 +755,7 @@
     MainThreadAssert();
     _textColor = textColor;
     self.indicatorLabel.textColor = textColor;
-    self.pointLabel.textColor = textColor;
+    self.suffixPointLabel.textColor = textColor;
     self.statusLabel.textColor = textColor;
 }
 
@@ -786,18 +775,20 @@
 {
     MainThreadAssert();
     self.xq_backgroundView.layer.borderWidth = foregroundBorderWidth;
+    self.statusLabel.layer.borderWidth = foregroundBorderWidth;
 }
 
 - (void)setForegroundCornerRaidus:(CGFloat)foregroundCornerRaidus
 {
     MainThreadAssert();
     self.xq_backgroundView.layer.cornerRadius = foregroundCornerRaidus;
+    self.statusLabel.layer.cornerRadius = foregroundCornerRaidus;
 }
 
-- (void)setAnimatedDuration:(CGFloat)animatedDuration
+- (void)setAnimationDuration:(CGFloat)animationDuration
 {
     MainThreadAssert();
-    _animatedDuration = animatedDuration;
+    _animationDuration = animationDuration;
 }
 
 - (void)setRingRadius:(CGFloat)ringRadius
@@ -812,7 +803,7 @@
     _progress = progress;
     
     if (self.mode == XQProgressHUDModeProgress) {
-        self.animatedView.progress = progress;
+        self.animationView.progress = progress;
     }
 }
 
@@ -850,7 +841,7 @@
 {
     MainThreadAssert();
     self.indicatorLabel.font = textFont;
-    self.pointLabel.font = textFont;
+    self.suffixPointLabel.font = textFont;
     self.statusLabel.font = textFont;
 }
 
@@ -1017,7 +1008,7 @@
 #pragma mark - UIColor Category
 @implementation UIColor (XQProgressHUDColor)
 
-+ (UIColor *)xq_animatedViewDefaultColor
++ (UIColor *)xq_animationViewDefaultColor
 {
     return [UIColor colorWithRed:0.36 green:0.60 blue:0.81 alpha:1.00];
 }
