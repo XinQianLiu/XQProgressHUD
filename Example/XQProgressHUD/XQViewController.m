@@ -200,6 +200,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.textColor = [UIColor redColor];
     hud.suffixPointEnabled = NO;
     hud.text = @"俺师傅看你的沙发那你阿富汗都是撒娇办法吗坚持不懈看着酒吧上课就打算斗爱吃那就不是怒问老师基本法办法";
+    hud.maximumWidth = 160.0f;
     [hud show];
     [hud dismissAfterDelay:2.0f];
 }
@@ -245,7 +246,8 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
     hud.mode = XQProgressHUDModeTextOnly;
-    hud.text = @"Text only";
+    hud.text = @"Text only Text only Text only Text only Text only";
+    hud.maximumWidth = 200.0f;
     [hud show];
     [hud dismissAfterDelay:2.0f];
 }

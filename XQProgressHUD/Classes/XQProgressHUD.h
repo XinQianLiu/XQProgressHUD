@@ -69,6 +69,7 @@ typedef void(^XQProgressHUDHandler)();
 @property (nonatomic, assign) CGFloat           suffixPointAnimationDuration;// Default 0.2f;
 @property (nonatomic, assign) CGFloat           yOffset;
 @property (nonatomic, assign) CGSize            size;                        // Default is CGSizeMake(120.0f, 90.0f)
+@property (nonatomic, assign) CGFloat           maximumWidth;                // Default is 140.0f, textOnly is 260.0f;
 
 @property (nonatomic) UIColor                   *trackTintColor;             // Default whiteColor
 @property (nonatomic) UIColor                   *progressTintColor;          // Default xq_animatedViewDefaultColor

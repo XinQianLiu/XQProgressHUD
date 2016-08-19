@@ -12,10 +12,8 @@
 
 static CGFloat const textHeightScalingFactor = 5.3f;
 static CGFloat const wideSpacing = 10.0f;
-static CGFloat const maximumWidth = 140.0f;
 static CGFloat const atTheTopOfTheScalingFactor = 8.5f;
 static CGFloat const indicatorViewSpacing = 15.0f;
-static CGFloat const maximumTextWidth = 260.0f;
 static CGFloat const minimumTextHeight = 20.0f;
 static CGFloat const defaultWidth = 120.0f;
 
@@ -286,7 +284,7 @@ static CGFloat const defaultWidth = 120.0f;
 
 @property (nonatomic) UIWindow                      *overlayWindow;
 @property (nonatomic, strong) UIView                *xq_backgroundView;
-@property (nonatomic, strong) XQAnimationView        *animationView;
+@property (nonatomic, strong) XQAnimationView       *animationView;
 @property (nonatomic, strong) XQRootViewController  *rootViewController;
 @property (nonatomic, strong) UILabel               *statusLabel;
 @property (nonatomic, strong) UILabel               *indicatorLabel;
@@ -328,6 +326,7 @@ static CGFloat const defaultWidth = 120.0f;
         _isYOffset = NO;
         _ringRadius = 20.0f;
         _gifImageName = @"u8";
+        _maximumWidth = 140.0f;
         _trackTintColor = [UIColor whiteColor];
         _progressTintColor = [UIColor xq_animationViewDefaultColor];
         _animationDuration = 1.5f;
@@ -540,7 +539,7 @@ static CGFloat const defaultWidth = 120.0f;
                         width = foregroundWidth;
                     }
                     else{
-                        width = maximumWidth;
+                        width = self.maximumWidth;
                     }
                     
                     textHeight = [self size:CGSizeMake(width - wideSpacing, MAXFLOAT) text:self.text font:self.textFont].height + 1;
@@ -636,8 +635,8 @@ static CGFloat const defaultWidth = 120.0f;
             {
                 width = [self size:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width;
                 
-                if (width >= maximumTextWidth) {
-                    width = maximumTextWidth;
+                if (width >= self.maximumWidth) {
+                    width = self.maximumWidth;
                 }
                 
                 height = [self size:CGSizeMake(width, MAXFLOAT) text:self.text font:self.textFont].height;
@@ -817,6 +816,12 @@ static CGFloat const defaultWidth = 120.0f;
     _isYOffset = YES;
 }
 
+- (void)setMaximumWidth:(CGFloat)maximumWidth
+{
+    MainThreadAssert();
+    _maximumWidth = maximumWidth;
+}
+
 - (NSString *)text
 {
     return self.indicatorLabel.text;
@@ -865,6 +870,9 @@ static CGFloat const defaultWidth = 120.0f;
 {
     MainThreadAssert();
     _mode = mode;
+    if (mode == XQProgressHUDModeTextOnly) {
+        _maximumWidth = 260.0f;
+    }
 }
 
 #ifdef DEBUG
