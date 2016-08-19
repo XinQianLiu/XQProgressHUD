@@ -295,6 +295,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
         self.hud.text = NSLocalizedString(@"Completed", @"HUD completed title");
         [self.hud show];
         [self.hud dismissAfterDelay:2.0f];
+        self.hud = nil;
     });
 }
 
