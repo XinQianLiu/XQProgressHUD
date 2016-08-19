@@ -666,7 +666,7 @@ static CGFloat const defaultWidth = 120.0f;
 - (void)setUpTheSuffixPointTimer
 {
     [self removeSuffixPointTimer];
-    self.suffixPointTimer = [NSTimer scheduledTimerWithTimeInterval:self.suffixPointAnimationDuration target:self selector:@selector(weekTime:) userInfo:nil repeats:YES];
+    self.suffixPointTimer = [NSTimer scheduledTimerWithTimeInterval:self.suffixPointAnimationDuration target:self selector:@selector(responseToSuffixPointTimer) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.suffixPointTimer forMode:NSDefaultRunLoopMode];
 }
 
@@ -704,9 +704,9 @@ static CGFloat const defaultWidth = 120.0f;
         [self removeSuffixPointTimer];
         
         // Dismiss HUD
-        _overlayWindow.hidden = YES;
-        _overlayWindow = nil;
-        _rootViewController = nil;
+        self.overlayWindow.hidden = YES;
+        self.overlayWindow = nil;
+        self.rootViewController = nil;
 
         // Completion handler
         if (self.didDismissHandler) {
@@ -715,7 +715,7 @@ static CGFloat const defaultWidth = 120.0f;
     }];
 }
 
-- (void)weekTime:(NSTimer *)timer
+- (void)responseToSuffixPointTimer
 {
     if ([self.suffixPointLabel.text isEqualToString:@"."]) {
         self.suffixPointLabel.text = @". .";
@@ -733,15 +733,16 @@ static CGFloat const defaultWidth = 120.0f;
 {
     MainThreadAssert();
     _foregroundColor = foregroundColor;
-    self.xq_backgroundView.backgroundColor = foregroundColor;
-    self.statusLabel.backgroundColor = foregroundColor;
+    _xq_backgroundView.backgroundColor = foregroundColor;
+    _statusLabel.backgroundColor = foregroundColor;
 }
 
 - (void)setForegroundBorderColor:(UIColor *)foregroundBorderColor
 {
     MainThreadAssert();
-    self.xq_backgroundView.layer.borderColor = foregroundBorderColor.CGColor;
-    self.statusLabel.layer.borderColor = foregroundBorderColor.CGColor;
+    _foregroundBorderColor = foregroundBorderColor;
+    _xq_backgroundView.layer.borderColor = foregroundBorderColor.CGColor;
+    _statusLabel.layer.borderColor = foregroundBorderColor.CGColor;
 }
 
 - (void)setTrackTintColor:(UIColor *)trackTintColor
@@ -754,9 +755,9 @@ static CGFloat const defaultWidth = 120.0f;
 {
     MainThreadAssert();
     _textColor = textColor;
-    self.indicatorLabel.textColor = textColor;
-    self.suffixPointLabel.textColor = textColor;
-    self.statusLabel.textColor = textColor;
+    _indicatorLabel.textColor = textColor;
+    _suffixPointLabel.textColor = textColor;
+    _statusLabel.textColor = textColor;
 }
 
 - (void)setProgressTintColor:(UIColor *)progressTintColor
@@ -774,15 +775,17 @@ static CGFloat const defaultWidth = 120.0f;
 - (void)setForegroundBorderWidth:(CGFloat)foregroundBorderWidth
 {
     MainThreadAssert();
-    self.xq_backgroundView.layer.borderWidth = foregroundBorderWidth;
-    self.statusLabel.layer.borderWidth = foregroundBorderWidth;
+    _foregroundBorderWidth = foregroundBorderWidth;
+    _xq_backgroundView.layer.borderWidth = foregroundBorderWidth;
+    _statusLabel.layer.borderWidth = foregroundBorderWidth;
 }
 
 - (void)setForegroundCornerRaidus:(CGFloat)foregroundCornerRaidus
 {
     MainThreadAssert();
-    self.xq_backgroundView.layer.cornerRadius = foregroundCornerRaidus;
-    self.statusLabel.layer.cornerRadius = foregroundCornerRaidus;
+    _foregroundCornerRaidus = foregroundCornerRaidus;
+    _xq_backgroundView.layer.cornerRadius = foregroundCornerRaidus;
+    _statusLabel.layer.cornerRadius = foregroundCornerRaidus;
 }
 
 - (void)setAnimationDuration:(CGFloat)animationDuration
@@ -803,7 +806,7 @@ static CGFloat const defaultWidth = 120.0f;
     _progress = progress;
     
     if (self.mode == XQProgressHUDModeProgress) {
-        self.animationView.progress = progress;
+        _animationView.progress = progress;
     }
 }
 
@@ -822,8 +825,8 @@ static CGFloat const defaultWidth = 120.0f;
 - (void)setText:(NSString *)text
 {
     MainThreadAssert();
-    self.indicatorLabel.text = text;
-    self.statusLabel.text = text;
+    _indicatorLabel.text = text;
+    _statusLabel.text = text;
 }
 
 - (void)setGifImageName:(NSString *)gifImageName
@@ -840,9 +843,9 @@ static CGFloat const defaultWidth = 120.0f;
 - (void)setTextFont:(UIFont *)textFont
 {
     MainThreadAssert();
-    self.indicatorLabel.font = textFont;
-    self.suffixPointLabel.font = textFont;
-    self.statusLabel.font = textFont;
+    _indicatorLabel.font = textFont;
+    _suffixPointLabel.font = textFont;
+    _statusLabel.font = textFont;
 }
 
 - (void)setCustomIndicator:(UIView *)customIndicator
