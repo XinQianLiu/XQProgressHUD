@@ -34,6 +34,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
 @interface XQViewController () <UITableViewDataSource, UITableViewDelegate, NSURLSessionDelegate>
 
 @property (nonatomic, strong) NSArray <XQExample *> *examples;
+@property (nonatomic, strong) XQProgressHUD *hud;
 
 @end
 
@@ -61,6 +62,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
                       [XQExample exampleWithTitle:@"rotating mode" selector:@selector(rotatingModeExample)],
                       [XQExample exampleWithTitle:@"Cyclic rotation mode" selector:@selector(cyclicRotationModeExample)],
                       [XQExample exampleWithTitle:@"Progress mode" selector:@selector(progressModeExample)],
+                      [XQExample exampleWithTitle:@"Networking mode" selector:@selector(networkingMode)],
                       [XQExample exampleWithTitle:@"Success mode" selector:@selector(successModeExample)],
                       [XQExample exampleWithTitle:@"Error mode" selector:@selector(errorModeExample)],
                       [XQExample exampleWithTitle:@"With details label" selector:@selector(detailsLabelExample)],
@@ -68,6 +70,15 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
                       [XQExample exampleWithTitle:@"GIF mode" selector:@selector(gifModeExample)],
                       [XQExample exampleWithTitle:@"Text only" selector:@selector(textOnlyExample)]
                       ];
+}
+
+- (XQProgressHUD *)hud
+{
+    if (!_hud) {
+        _hud = [XQProgressHUD HUD];
+    }
+    
+    return _hud;
 }
 
 #pragma mark - Selectors
@@ -145,6 +156,21 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
             });
         });
     });
+}
+
+- (void)networkingMode
+{
+    self.hud.mode = XQProgressHUDModeProgress;
+    [self.hud show];
+    [self doSomeNetworkWorkWithProgress];
+}
+
+- (void)doSomeNetworkWorkWithProgress {
+    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:nil];
+    NSURL *URL = [NSURL URLWithString:@"https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/HT1425/sample_iPod.m4v.zip"];
+    NSURLSessionDownloadTask *task = [session downloadTaskWithURL:URL];
+    [task resume];
 }
 
 - (void)successModeExample
@@ -259,4 +285,25 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     });
 }
 
+#pragma mark - NSURLSessionDelegate
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+    // Do something with the data at location...
+    
+    // Update the UI on the main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.hud.mode = XQProgressHUDModeSuccess;
+        self.hud.text = NSLocalizedString(@"Completed", @"HUD completed title");
+        [self.hud show];
+        [self.hud dismissAfterDelay:2.0f];
+    });
+}
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    float progress = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
+    
+    // Update the UI on the main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.hud.progress = progress;
+    });
+}
 @end

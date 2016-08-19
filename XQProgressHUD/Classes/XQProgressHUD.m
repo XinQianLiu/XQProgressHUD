@@ -315,17 +315,6 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5f];
         
-        _isYOffset = NO;
-        _suffixPointEnabled = YES;
-        _progressTintColor = [UIColor xq_animatedViewDefaultColor];
-        _trackTintColor = [UIColor whiteColor];
-        _animatedDuration = 1.5f;
-        _suffixPointAnimatedDuration = 0.2f;
-        _mode = XQProgressHUDModeIndicator;
-        _textColor = [UIColor xq_animatedViewDefaultColor];
-        _size = CGSizeMake(120.0f, 90.0f);
-        _ringRadius = 20.0f;
-        
         // Set up view hierarchy
         _xq_backgroundView = [[UIView alloc] init];
         _xq_backgroundView.backgroundColor = [UIColor xq_hudForegroundColor];
@@ -343,7 +332,6 @@
         _indicatorLabel.font = [UIFont systemFontOfSize:15.0f];
         _indicatorLabel.textColor = [UIColor xq_animatedViewDefaultColor];
         _indicatorLabel.numberOfLines = 1;
-        _indicatorLabel.text = @"Loading";
         _indicatorLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_xq_backgroundView addSubview:_indicatorLabel];
         
@@ -377,6 +365,18 @@
         _statusLabel.hidden = YES;
         _statusLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:_statusLabel];
+        
+        _isYOffset = NO;
+        _suffixPointEnabled = YES;
+        _progressTintColor = [UIColor xq_animatedViewDefaultColor];
+        _trackTintColor = [UIColor whiteColor];
+        _animatedDuration = 1.5f;
+        _suffixPointAnimatedDuration = 0.2f;
+        _mode = XQProgressHUDModeIndicator;
+        _textColor = [UIColor xq_animatedViewDefaultColor];
+        _size = CGSizeMake(120.0f, 90.0f);
+        _ringRadius = 20.0f;
+        self.text = @"Loading";
     }
     
     return self;
@@ -703,7 +703,7 @@
         [self removeWeekTimer];
         
         // Dismiss HUD
-        [self removeFromSuperview];
+        [_overlayWindow removeFromSuperview];
         _overlayWindow.hidden = YES;
         _overlayWindow = nil;
         _rootViewController = nil;
@@ -718,6 +718,7 @@
         _textColor = [UIColor xq_animatedViewDefaultColor];
         _size = CGSizeMake(120.0f, 90.0f);
         _ringRadius = 20.0f;
+        self.text = @"Loading";
         
         // Completion handler
         if (self.didDismissHandler) {
