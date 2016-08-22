@@ -535,7 +535,7 @@ static CGFloat const defaultWidth = 120.0f;
                     if (foregroundWidth <= self.maximumWidth) {
                         width = foregroundWidth;
                     }
-                    else if (width >= self.maximumWidth){
+                    else if (foregroundWidth >= self.maximumWidth){
                         width = self.maximumWidth;
                     }
                     else{
