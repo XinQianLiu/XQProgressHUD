@@ -86,7 +86,6 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
 - (void)IndicatorModeExample
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
-    hud.maximumWidth = 200.0f;
     [hud show];
     [hud dismissAfterDelay:3.0f];
 }
