@@ -396,6 +396,7 @@ static CGFloat const defaultWidth = 120.0f;
 
 - (void)show
 {
+    MainThreadAssert();
     if (!self.rootViewController) {
         self.rootViewController = [[XQRootViewController alloc] initWithNibName:nil bundle:nil];
         self.rootViewController.progressHUD = self;
