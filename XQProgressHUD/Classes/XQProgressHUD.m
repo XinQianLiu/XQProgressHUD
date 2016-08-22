@@ -532,14 +532,14 @@ static CGFloat const defaultWidth = 120.0f;
                 else {
                     width = [self size:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width + wideSpacing;
                     
-                    if (width <= foregroundWidth) {
+                    if (foregroundWidth <= self.maximumWidth) {
                         width = foregroundWidth;
                     }
-                    else if (foregroundWidth > defaultWidth){
-                        width = foregroundWidth;
+                    else if (width >= self.maximumWidth){
+                        width = self.maximumWidth;
                     }
                     else{
-                        width = self.maximumWidth;
+                        width = defaultWidth;
                     }
                     
                     textHeight = [self size:CGSizeMake(width - wideSpacing, MAXFLOAT) text:self.text font:self.textFont].height + 1;
