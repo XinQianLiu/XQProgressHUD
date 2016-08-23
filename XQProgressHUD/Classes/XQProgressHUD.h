@@ -95,7 +95,7 @@ typedef void(^XQProgressHUDHandler)();
 @property (nonatomic, assign) XQProgressHUDMode mode;
 @property (nonatomic, strong) UIColor           *trackTintColor;    // default whiteColor
 @property (nonatomic, strong) UIColor           *progressTintColor; // default xq_animatedViewDefaultColor
-@property (nonatomic, assign) CGFloat           animationDuration;   // default 2.0f
+@property (nonatomic, assign) CGFloat           animationDuration;  // default 2.0f
 @property (nonatomic, assign) CGFloat           radius;             // default 20.0f
 @property (nonatomic, assign) CGFloat           progress;
 
@@ -105,9 +105,9 @@ typedef void(^XQProgressHUDHandler)();
 @interface UIImage (XQProgressHUDImage)
 
 // loading Image
-+ (UIImage *)loadImageWithNamed:(NSString *)named;
++ (UIImage *)xq_imageWithName:(NSString *)named;
 // loading Gif
-+ (UIImage *)loadingGifWithName:(NSString *)name;
++ (UIImage *)xq_gifWithName:(NSString *)name;
 
 @end
 

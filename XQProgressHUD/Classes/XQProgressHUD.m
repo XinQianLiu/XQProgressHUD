@@ -494,7 +494,7 @@ static CGFloat const defaultWidth = 120.0f;
             self.xq_backgroundView.hidden = YES;
             self.statusLabel.hidden = YES;
             self.imageView.hidden = NO;
-            self.imageView.image = [UIImage loadingGifWithName:self.gifImageName];
+            self.imageView.image = [UIImage xq_gifWithName:self.gifImageName];
             break;
             
         case XQProgressHUDModeTextOnly:
@@ -657,7 +657,7 @@ static CGFloat const defaultWidth = 120.0f;
 
 - (UIImageView *)imageViewWithImageName:(NSString *)name
 {
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage loadImageWithNamed:name]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage xq_imageWithName:name]];
     imgView.contentMode = UIViewContentModeScaleAspectFit;
     return imgView;
 }
@@ -895,7 +895,7 @@ static CGFloat const defaultWidth = 120.0f;
 #pragma mark - UIImage Category
 @implementation UIImage (XQProgressHUDImage)
 
-+ (UIImage *)loadImageWithNamed:(NSString *)named
++ (UIImage *)xq_imageWithName:(NSString *)named
 {
     NSString *path;
     
@@ -925,7 +925,7 @@ static CGFloat const defaultWidth = 120.0f;
 }
 
 // loading Gif
-+ (UIImage *)loadingGifWithName:(NSString *)name
++ (UIImage *)xq_gifWithName:(NSString *)name
 {
     if (!name || [name isEqualToString:@""]) {
         name = @"u8";
@@ -952,7 +952,7 @@ static CGFloat const defaultWidth = 120.0f;
         return [self animatedGIFWithData:data];
     }
     else {
-        return [UIImage imageNamed:name];
+        return nil;
     }
 }
 
