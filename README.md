@@ -40,7 +40,6 @@ The sample code, details the Demo:
 ```objective-c
 XQProgressHUD *hud = [XQProgressHUD HUD];
 [hud show];
-[hud dismissAfterDelay:3.0f];
 ```
 
 ## Author

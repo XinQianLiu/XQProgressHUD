@@ -46,9 +46,9 @@ typedef void(^XQProgressHUDHandler)();
 + (instancetype)HUD;
 
 - (void)show;
+- (void)showWithTimeout:(NSTimeInterval)time;
 
 - (void)dismiss;
-- (void)dismissAfterDelay:(NSTimeInterval)delay;
 
 @property (nonatomic, assign) XQProgressHUDMode     mode;                           // Default is XQProgressHUDModeIndicator.
 @property (nonatomic, copy) XQProgressHUDHandler    didDismissHandler;

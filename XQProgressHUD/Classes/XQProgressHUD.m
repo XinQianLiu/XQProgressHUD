@@ -396,6 +396,11 @@ static CGFloat const defaultWidth = 120.0f;
 
 - (void)show
 {
+    [self showWithTimeout:0];
+}
+
+- (void)showWithTimeout:(NSTimeInterval)time
+{
     MainThreadAssert();
     if (!self.rootViewController) {
         self.rootViewController = [[XQRootViewController alloc] initWithNibName:nil bundle:nil];
@@ -421,22 +426,16 @@ static CGFloat const defaultWidth = 120.0f;
     [UIView animateWithDuration:0.5f animations:^{
         self.overlayWindow.alpha = 1.0f;
     }];
+    
+    if (time > 0) {
+        [self removeDismissTimer];
+        self.dismissTimer = [NSTimer scheduledTimerWithTimeInterval:time target:self selector:@selector(responseToDismissTimer) userInfo:nil repeats:NO];
+    }
 }
 
 - (void)dismiss
 {
-    [self dismissAfterDelay:0];
-}
-
-- (void)dismissAfterDelay:(NSTimeInterval)delay
-{
-    if (delay > 0) {
-        self.dismissTimer = [NSTimer scheduledTimerWithTimeInterval:delay target:self selector:@selector(responseToDismissTimer) userInfo:nil repeats:NO];
-        [[NSRunLoop currentRunLoop] addTimer:self.dismissTimer forMode:NSDefaultRunLoopMode];
-    }
-    else {
-        [self responseToDismissTimer];
-    }
+    [self responseToDismissTimer];
 }
 
 #pragma mark - Private methods
@@ -476,13 +475,13 @@ static CGFloat const defaultWidth = 120.0f;
             
             if (self.mode == XQProgressHUDModeSuccess) {
                 self.suffixPointEnabled = NO;
-                UIImageView *imageView = [self loadCustomIndicatorName:@"success"];
+                UIImageView *imageView = [self imageViewWithImageName:@"success"];
                 self.customIndicator = imageView;
                 [self.animationView addSubview:_customIndicator];
             }
             else if (self.mode == XQProgressHUDModeError) {
                 self.suffixPointEnabled = NO;
-                UIImageView *imageView = [self loadCustomIndicatorName:@"error"];
+                UIImageView *imageView = [self imageViewWithImageName:@"error"];
                 self.customIndicator = imageView;
                 [self.animationView addSubview:_customIndicator];
             }
@@ -531,19 +530,19 @@ static CGFloat const defaultWidth = 120.0f;
                     textHeight = height / textHeightScalingFactor;
                 }
                 else {
-                    width = [self size:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width + wideSpacing;
+                    width = [self acquireLabelSize:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width + wideSpacing;
                     
-                    if (foregroundWidth <= self.maximumWidth) {
-                        width = foregroundWidth;
-                    }
-                    else if (foregroundWidth >= self.maximumWidth){
+                    if (width >= self.maximumWidth) {
                         width = self.maximumWidth;
                     }
-                    else{
-                        width = defaultWidth;
+                    else if (width <= foregroundWidth){
+                        width = foregroundWidth;
+                    }
+                    else if (width >= foregroundWidth && width <= self.maximumWidth){
+                        width = width;
                     }
                     
-                    textHeight = [self size:CGSizeMake(width - wideSpacing, MAXFLOAT) text:self.text font:self.textFont].height + 1;
+                    textHeight = [self acquireLabelSize:CGSizeMake(width - wideSpacing, MAXFLOAT) text:self.text font:self.textFont].height + 1;
                     height = textHeight + (foregroundHeight / atTheTopOfTheScalingFactor) + self.ringRadius * 2 + indicatorViewSpacing;
                     
                     if (height <= foregroundHeight) {
@@ -595,7 +594,7 @@ static CGFloat const defaultWidth = 120.0f;
                     [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.xq_backgroundView attribute:NSLayoutAttributeRight multiplier:1 constant:-2.0f]];
                     [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.indicatorLabel attribute:NSLayoutAttributeRight multiplier:1 constant:2.0f]];
                     [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutAttributeBottom toItem:self.xq_backgroundView attribute:NSLayoutAttributeBottom multiplier:1 constant:-5]];
-                     [self setUpTheSuffixPointTimer];
+                     [self addTheSuffixPointTimer];
                     self.indicatorLabel.textAlignment = NSTextAlignmentRight;
                     self.indicatorLabel.numberOfLines = 1;
                 }
@@ -634,13 +633,13 @@ static CGFloat const defaultWidth = 120.0f;
             
         case XQProgressHUDModeTextOnly:
             {
-                width = [self size:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width;
+                width = [self acquireLabelSize:CGSizeMake(MAXFLOAT, MAXFLOAT) text:self.text font:self.textFont].width;
                 
                 if (width >= self.maximumWidth) {
                     width = self.maximumWidth;
                 }
                 
-                height = [self size:CGSizeMake(width, MAXFLOAT) text:self.text font:self.textFont].height;
+                height = [self acquireLabelSize:CGSizeMake(width, MAXFLOAT) text:self.text font:self.textFont].height;
                 
                 if (height <= minimumTextHeight) {
                     height = minimumTextHeight;
@@ -656,18 +655,17 @@ static CGFloat const defaultWidth = 120.0f;
     }
 }
 
-- (UIImageView *)loadCustomIndicatorName:(NSString *)name
+- (UIImageView *)imageViewWithImageName:(NSString *)name
 {
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage loadImageWithNamed:name]];
     imgView.contentMode = UIViewContentModeScaleAspectFit;
     return imgView;
 }
 
-- (void)setUpTheSuffixPointTimer
+- (void)addTheSuffixPointTimer
 {
     [self removeSuffixPointTimer];
     self.suffixPointTimer = [NSTimer scheduledTimerWithTimeInterval:self.suffixPointAnimationDuration target:self selector:@selector(responseToSuffixPointTimer) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.suffixPointTimer forMode:NSDefaultRunLoopMode];
 }
 
 - (void)removeSuffixPointTimer
@@ -686,10 +684,17 @@ static CGFloat const defaultWidth = 120.0f;
     }
 }
 
-- (CGSize)size:(CGSize)size text:(NSString *)text font:(UIFont *)font
+- (CGSize)acquireLabelSize:(CGSize)size text:(NSString *)text font:(UIFont *)font
 {
-    CGSize iSize = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil].size;
-    return iSize;
+    if ([text respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
+        CGRect stringRect = [text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:font} context:nil];
+        stringRect = CGRectIntegral(stringRect);
+        return stringRect.size;
+    }
+    else{
+        CGSize stringSize = [text sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
+        return stringSize;
+    }
 }
 
 #pragma mark - Action
@@ -945,7 +950,8 @@ static CGFloat const defaultWidth = 120.0f;
     
     if (data) {
         return [self animatedGIFWithData:data];
-    } else {
+    }
+    else {
         return [UIImage imageNamed:name];
     }
 }
@@ -963,7 +969,8 @@ static CGFloat const defaultWidth = 120.0f;
     
     if (count <= 1) {
         animatedImage = [[UIImage alloc] initWithData:data];
-    } else {
+    }
+    else {
         NSMutableArray  *images = [NSMutableArray array];
         NSTimeInterval  duration = 0.0f;
         
@@ -996,7 +1003,8 @@ static CGFloat const defaultWidth = 120.0f;
     
     if (delayTimeUnclampedProp) {
         duration = [delayTimeUnclampedProp floatValue];
-    } else {
+    }
+    else {
         NSNumber *delayTimeProp = gifProperties[(NSString *)kCGImagePropertyGIFDelayTime];
         
         if (delayTimeProp) {

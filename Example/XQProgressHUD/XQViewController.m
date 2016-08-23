@@ -86,16 +86,14 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
 - (void)IndicatorModeExample
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
-    [hud show];
-    [hud dismissAfterDelay:3.0f];
+    [hud showWithTimeout:3.0f];
 }
 
 - (void)rotatingModeExample
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
     hud.mode = XQProgressHUDModeRotating;
-    [hud show];
-    [hud dismissAfterDelay:3.0f];
+    [hud showWithTimeout:3.0f];
 }
 
 - (void)cyclicRotationModeExample
@@ -106,8 +104,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.size = CGSizeMake(150, 150);
     hud.textFont = [UIFont systemFontOfSize:25.0f];
     hud.text = @"正在加载";
-    [hud show];
-    [hud dismissAfterDelay:3.0f];
+    [hud showWithTimeout:3.0f];
 }
 
 - (void)progressModeExample
@@ -149,8 +146,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
                         hud.mode = XQProgressHUDModeTextOnly;
                         hud.text = @"组合提示完成";
                         hud.textColor = [UIColor whiteColor];
-                        [hud show];
-                        [hud dismissAfterDelay:2.0f];
+                        [hud showWithTimeout:2.0f];
                     });
                 });
             });
@@ -178,8 +174,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     XQProgressHUD *hud = [XQProgressHUD HUD];
     hud.mode = XQProgressHUDModeSuccess;
     hud.text = @"Load the success!";
-    [hud show];
-    [hud dismissAfterDelay:2.0f];
+    [hud showWithTimeout:2.0f];
 }
 
 - (void)errorModeExample
@@ -188,8 +183,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.mode = XQProgressHUDModeError;
     hud.text = @"Load failed!~~";
     hud.textFont = [UIFont systemFontOfSize:18.0f];
-    [hud show];
-    [hud dismissAfterDelay:2.0f];
+    [hud showWithTimeout:2.0f];
 }
 
 - (void)detailsLabelExample
@@ -200,10 +194,8 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.textColor = [UIColor redColor];
     hud.suffixPointEnabled = NO;
     hud.text = @"俺师傅看你的沙发那你阿富汗都是撒娇办法吗坚持不懈看着酒吧上课就打算斗爱吃那就不是怒问老师基本法办法";
-    hud.size = CGSizeMake(170, 90);
     hud.maximumWidth = 160.0f;
-    [hud show];
-    [hud dismissAfterDelay:2.0f];
+    [hud showWithTimeout:3.0f];
 }
 
 - (void)customIndicatorModeExample
@@ -229,8 +221,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.didDismissHandler = ^(){
         NSLog(@"HUD Completion");
     };
-    [hud show];
-    [hud dismissAfterDelay:5.0f];
+    [hud showWithTimeout:5.0f];
 }
 
 - (void)gifModeExample
@@ -239,8 +230,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.mode = XQProgressHUDModeGIF;
     hud.gifImageName = @"u8";
     hud.size = CGSizeMake(150.0f, 150.0f);
-    [hud show];
-    [hud dismissAfterDelay:5.0f];
+    [hud showWithTimeout:5.0f];
 }
 
 - (void)textOnlyExample
@@ -249,8 +239,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     hud.mode = XQProgressHUDModeTextOnly;
     hud.text = @"Text only Text only Text only Text only Text only";
     hud.maximumWidth = 200.0f;
-    [hud show];
-    [hud dismissAfterDelay:2.0f];
+    [hud showWithTimeout:2.0f];
 }
 
 #pragma mark - UITableViewDelegate && UITableViewDatasource
@@ -296,8 +285,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
     dispatch_async(dispatch_get_main_queue(), ^{
         self.hud.mode = XQProgressHUDModeSuccess;
         self.hud.text = NSLocalizedString(@"Completed", @"HUD completed title");
-        [self.hud show];
-        [self.hud dismissAfterDelay:2.0f];
+        [self.hud showWithTimeout:2.0f];
         self.hud = nil;
     });
 }
