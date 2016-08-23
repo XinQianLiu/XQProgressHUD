@@ -6,13 +6,15 @@
 //  Copyright (c) 2016 LiuXinQian. All rights reserved.
 //
 
+#import <XQProgressHUD/XQProgressHUD.h>
+
 @import XCTest;
 
-@interface Tests : XCTestCase
+@interface XQProgressHUDTests : XCTestCase
 
 @end
 
-@implementation Tests
+@implementation XQProgressHUDTests
 
 - (void)setUp
 {
@@ -26,9 +28,11 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testInitialization
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    XQProgressHUD *hud = [XQProgressHUD HUD];
+    
+    XCTAssertNotNil(hud);
 }
 
 @end
