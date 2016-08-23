@@ -587,7 +587,7 @@ static CGFloat const defaultWidth = 120.0f;
                 [self.indicatorLabel addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:self.suffixPointEnabled ? maxX - wideSpacing : width - wideSpacing]];
                 [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.indicatorLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutAttributeBottom toItem:self.xq_backgroundView attribute:NSLayoutAttributeBottom multiplier:1 constant:-5]];
                 
-                // PointLabelLayer
+                // suffixPointLabelLayout
                 if (self.suffixPointEnabled) {
                     self.suffixPointLabel.hidden = NO;
                     [self.xq_backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:self.suffixPointLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutAttributeTop toItem:self.animationView attribute:NSLayoutAttributeBottom multiplier:1 constant:5.0f]];
