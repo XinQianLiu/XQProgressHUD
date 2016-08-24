@@ -25,7 +25,7 @@ Rotating animation for network requests.
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = 'MIT'
   s.author           = { 'LiuXinQian' => '1613565807@qq.com' }
-  s.source           = { :git => 'https://github.com/XinQianLiu/XQProgressHUD.git', :tag => version }
+  s.source           = { :git => 'https://github.com/XinQianLiu/XQProgressHUD.git', :tag => 'version' }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '7.0'

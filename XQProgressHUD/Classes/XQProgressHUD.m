@@ -15,7 +15,6 @@ static CGFloat const wideSpacing = 10.0f;
 static CGFloat const atTheTopOfTheScalingFactor = 8.5f;
 static CGFloat const indicatorViewSpacing = 15.0f;
 static CGFloat const minimumTextHeight = 20.0f;
-static CGFloat const defaultWidth = 120.0f;
 
 #pragma mark -
 #pragma mark - XQRootViewController
