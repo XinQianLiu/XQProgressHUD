@@ -48,6 +48,10 @@ static CGFloat const defaultWidth = 120.0f;
 
 + (CAAnimationGroup *)cyclicRotationAnimationWithDuration:(CFTimeInterval)duration
 {
+    if (duration <= 0) {
+        duration = 1.5f;
+    }
+    
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     
     animation.duration = duration / 2.0f;
@@ -80,10 +84,14 @@ static CGFloat const defaultWidth = 120.0f;
 
 + (CABasicAnimation *)rotatingAnimationWithDuration:(CFTimeInterval)duration
 {
-    CAMediaTimingFunction *linearCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    if (duration <= 0) {
+        duration = 1.5f;
+    }
+    
+    CAMediaTimingFunction   *linearCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    CABasicAnimation        *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
     animation.fromValue = 0;
-    animation.toValue = @(M_PI*2);
+    animation.toValue = @(M_PI * 2);
     animation.duration = duration;
     animation.timingFunction = linearCurve;
     animation.removedOnCompletion = NO;
@@ -144,18 +152,16 @@ static CGFloat const defaultWidth = 120.0f;
 #pragma mark - Private methods
 - (CAShapeLayer *)newCircleLayerWithRadius:(CGFloat)radius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor
 {
-    CGFloat startAngle = -M_PI_2;
-    CGFloat endAngle = 3 * M_PI_2;
-    
+    CGFloat         startAngle = -M_PI_2;
+    CGFloat         endAngle = 3 * M_PI_2;
     CAShapeLayer    *circle = [CAShapeLayer layer];
     CGPoint         center = CGPointMake(self.radius, self.radius);
-    
-    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center
-                                                  radius      :radius - (self.radius / 5.0f - self.radius / 12.5f)
-                                                  startAngle  :startAngle
-                                                  endAngle    :endAngle
-                                                  clockwise   :YES];
-    
+    UIBezierPath    *path = [UIBezierPath bezierPathWithArcCenter:center
+                                                     radius      :radius - (self.radius / 5.0f - self.radius / 12.5f)
+                                                     startAngle  :startAngle
+                                                     endAngle    :endAngle
+                                                     clockwise   :YES];
+        
     circle.contentsScale = [UIScreen mainScreen].scale;
     circle.fillColor = [UIColor clearColor].CGColor;
     circle.strokeColor = borderColor.CGColor;
@@ -236,15 +242,16 @@ static CGFloat const defaultWidth = 120.0f;
     if (_mode != XQProgressHUDModeProgress) {
         return;
     }
+    
     // Draw background
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGFloat lineWidth = self.radius / 12.5f;
-    UIBezierPath *processBackgroundPath = [UIBezierPath bezierPath];
+    CGContextRef    context = UIGraphicsGetCurrentContext();
+    CGFloat         lineWidth = self.radius / 12.5f;
+    UIBezierPath    *processBackgroundPath = [UIBezierPath bezierPath];
     processBackgroundPath.lineWidth = lineWidth;
     processBackgroundPath.lineCapStyle = kCGLineCapButt;
     CGPoint center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    CGFloat radius = (self.bounds.size.width - lineWidth)/2;
-    CGFloat startAngle = - ((float)M_PI / 2); // 90 degrees
+    CGFloat radius = (self.bounds.size.width - lineWidth) / 2;
+    CGFloat startAngle = -((float)M_PI / 2);  // 90 degrees
     CGFloat endAngle = (2 * (float)M_PI) + startAngle;
     [processBackgroundPath addArcWithCenter:center radius:radius startAngle:startAngle endAngle:endAngle clockwise:YES];
     [_trackTintColor set];
@@ -416,7 +423,7 @@ static CGFloat const defaultWidth = 120.0f;
         self.overlayWindow.userInteractionEnabled = self.userInteractionEnabled;
         self.overlayWindow.rootViewController = self.rootViewController;
     }
-    
+
     self.overlayWindow.hidden = NO;
     
     [self updateIndicators];
@@ -712,7 +719,7 @@ static CGFloat const defaultWidth = 120.0f;
         self.overlayWindow.hidden = YES;
         self.overlayWindow = nil;
         self.rootViewController = nil;
-
+        
         // Completion handler
         if (self.didDismissHandler) {
             self.didDismissHandler();
