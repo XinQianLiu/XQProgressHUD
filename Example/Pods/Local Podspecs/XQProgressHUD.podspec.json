@@ -1,6 +1,6 @@
 {
   "name": "XQProgressHUD",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "summary": "Rotating animation view",
   "description": "Rotating animation for network requests.",
   "homepage": "https://github.com/XinQianLiu/XQProgressHUD",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/XinQianLiu/XQProgressHUD.git",
-    "tag": "0.0.1"
+    "tag": "version"
   },
   "platforms": {
     "ios": "7.0"
