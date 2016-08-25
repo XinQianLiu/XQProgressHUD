@@ -8,24 +8,6 @@
 
 #import <XQProgressHUD/XQProgressHUD.h>
 
-#define applicationWindowsCount [UIApplication sharedApplication].windows.count
-#define lastWindow [UIApplication sharedApplication].windows.lastObject
-#define applicationWindow [UIApplication sharedApplication].keyWindow
-
-#define XQTestHUDIsVisible \
-do{\
-XCTAssertNotEqualObjects(applicationWindow, lastWindow);\
-XCTAssertEqual(applicationWindowsCount, 2);\
-XCTAssertNotNil(hud.superview);\
-}while(0)
-
-#define XQTestHUDIsHiden \
-do{\
-XCTAssertEqualObjects(applicationWindow, lastWindow);\
-XCTAssertEqual(applicationWindowsCount, 1);\
-XCTAssertNil(hud.superview);\
-}while(0)
-
 @import XCTest;
 
 @interface XQProgressHUDTests : XCTestCase
@@ -55,48 +37,38 @@ XCTAssertNil(hud.superview);\
 - (void)testShow
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
-    
     XCTAssertNotNil(hud);
     [hud show];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        XQTestHUDIsVisible;
-    });
+    XCTAssertNotNil(hud.superview);
 }
 
 - (void)testShowWithTimeout
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
-    
     XCTAssertNotNil(hud);
-    
-    [UIView animateWithDuration:1.0f animations:^{
-        [hud showWithTimeout:2.0f];
-    } completion:^(BOOL finished) {
-        XQTestHUDIsVisible;
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            XQTestHUDIsHiden;
-        });
-    }];
+    [hud showWithTimeout:2.0f];
+    XCTAssertNotNil(hud.superview);
+    XCTestExpectation *expectation = [self expectationWithDescription:@"timeout"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        XCTAssertNil(hud.superview);
+        [expectation fulfill];
+    });
+    [self waitForExpectationsWithTimeout:5.0f handler:nil];
 }
 
 - (void)testDismiss
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
-    
     XCTAssertNotNil(hud);
-    
-    [UIView animateWithDuration:1.0f animations:^{
-        [hud show];
-    } completion:^(BOOL finished) {
-        XQTestHUDIsVisible;
-        
-        [hud dismiss];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            XQTestHUDIsHiden;
-        });
-    }];
+    [hud show];
+    XCTAssertNotNil(hud.superview);
+    [hud dismiss];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"dismiss"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        XCTAssertNil(hud.superview);
+        [expectation fulfill];
+    });
+    [self waitForExpectationsWithTimeout:5.0f handler:nil];
 }
 
 - (void)testHUDDidDismissHandlerBlock

@@ -157,6 +157,9 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
 - (void)networkingMode
 {
     self.hud.mode = XQProgressHUDModeProgress;
+    self.hud.didDismissHandler = ^(){
+        _hud = nil;
+    };
     [self.hud show];
     [self doSomeNetworkWorkWithProgress];
 }
@@ -237,8 +240,7 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
 {
     XQProgressHUD *hud = [XQProgressHUD HUD];
     hud.mode = XQProgressHUDModeTextOnly;
-    hud.text = @"Text only Text only Text only Text only Text only";
-    hud.maximumWidth = 200.0f;
+    hud.text = @"Text only";
     [hud showWithTimeout:2.0f];
 }
 
@@ -286,7 +288,6 @@ static NSString *const sDelayTimeKey = @"sDelayTimeKey";
         self.hud.mode = XQProgressHUDModeSuccess;
         self.hud.text = NSLocalizedString(@"Completed", @"HUD completed title");
         [self.hud showWithTimeout:2.0f];
-        self.hud = nil;
     });
 }
 

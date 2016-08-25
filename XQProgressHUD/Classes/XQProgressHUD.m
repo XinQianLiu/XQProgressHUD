@@ -715,6 +715,8 @@ static CGFloat const minimumTextHeight = 20.0f;
         [self removeSuffixPointTimer];
         
         // Dismiss HUD
+        [self removeFromSuperview];
+        [self.overlayWindow removeFromSuperview];
         self.overlayWindow.hidden = YES;
         self.overlayWindow = nil;
         self.rootViewController = nil;
