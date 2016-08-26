@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/XinQianLiu/XQProgressHUD.git",
-    "tag": "version"
+    "tag": "0.0.2"
   },
   "platforms": {
     "ios": "7.0"
