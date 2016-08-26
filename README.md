@@ -28,7 +28,7 @@ XQProgressHUD is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'XQProgressHUD', '~> 0.0.1'
+pod 'XQProgressHUD', '~> 0.0.3'
 ```
 
 ## Usage
