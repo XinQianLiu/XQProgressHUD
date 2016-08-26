@@ -1,5 +1,5 @@
 PODS:
-  - XQProgressHUD (0.0.2)
+  - XQProgressHUD (0.0.1)
 
 DEPENDENCIES:
   - XQProgressHUD (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  XQProgressHUD: 9b101c7e84bd949749a6641deaa605e1643838ed
+  XQProgressHUD: ff7d784a2ee3021334de06d89691ede4b30a8f99
 
 PODFILE CHECKSUM: 74db82a805d32d9925e2e2f6b47b0da6b340cd0d
 
